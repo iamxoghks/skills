@@ -123,10 +123,7 @@ export class DataFetcher {
     sessionFile: string,
   ): Promise<CodexSessionUsage> {
     const content = await readFile(sessionFile, "utf-8");
-    const entries = content
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line) as CodexLogEntry);
+    const entries = this.parseJsonl<CodexLogEntry>(content);
 
     const meta = entries.find((entry) => entry.type === "session_meta");
     const turnContext = entries.find((entry) => entry.type === "turn_context");
@@ -259,10 +256,7 @@ export class DataFetcher {
     if (!existsSync(indexPath)) return [];
 
     const content = await readFile(indexPath, "utf-8");
-    return content
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line) as CodexSessionIndexEntry);
+    return this.parseJsonl<CodexSessionIndexEntry>(content);
   }
 
   private async getMostRecentSessionFile(): Promise<string | undefined> {
@@ -291,5 +285,19 @@ export class DataFetcher {
 
   private extractIdFromFile(sessionFile: string): string {
     return basename(sessionFile).replace(/^rollout-/, "").replace(/\.jsonl$/, "");
+  }
+
+  private parseJsonl<T>(content: string): T[] {
+    const entries: T[] = [];
+    for (const line of content.split("\n")) {
+      if (!line.trim()) continue;
+      try {
+        entries.push(JSON.parse(line) as T);
+      } catch {
+        // Codex session logs are append-only. Ignore partial/corrupt lines so
+        // one bad local log does not break listing or receipt generation.
+      }
+    }
+    return entries;
   }
 }

@@ -25,10 +25,7 @@ export class TranscriptParser {
     }
 
     const content = await readFile(expandedPath, "utf-8");
-    const messages = content
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line) as CodexLogEntry);
+    const messages = this.parseJsonl(content);
 
     const meta = messages.find((message) => message.type === "session_meta");
     const responseItems = messages.filter((message) => message.type === "response_item");
@@ -85,5 +82,19 @@ export class TranscriptParser {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "")
       .slice(0, 80);
+  }
+
+  private parseJsonl(content: string): CodexLogEntry[] {
+    const entries: CodexLogEntry[] = [];
+    for (const line of content.split("\n")) {
+      if (!line.trim()) continue;
+      try {
+        entries.push(JSON.parse(line) as CodexLogEntry);
+      } catch {
+        // Codex can leave a final JSONL line partial if a write is interrupted.
+        // Skip corrupt lines instead of failing the entire receipt.
+      }
+    }
+    return entries;
   }
 }

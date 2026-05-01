@@ -11,7 +11,7 @@ export class HtmlRenderer {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Codex Receipt - ${data.transcriptData.sessionSlug}</title>
+  <title>Codex Receipt - ${this.escapeHtml(data.transcriptData.sessionSlug)}</title>
   <style>
     * {
       margin: 0;
@@ -297,10 +297,7 @@ export class HtmlRenderer {
       }
     });
 
-    // Log receipt info
     console.log('Codex Receipt Generated!');
-    console.log('Session:', '${this.escapeHtml(data.transcriptData.sessionSlug)}');
-    console.log('Points:', '${this.formatPoints(data.sessionData.totalCost)}');
     console.log('Press ESC to close');
   </script>
 </body>
