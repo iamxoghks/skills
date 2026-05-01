@@ -1,6 +1,6 @@
 {
   "name": "codex-receipts",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Generate receipt-style summaries for local Codex work sessions",
   "license": "MIT",
   "author": "iamxoghks",
