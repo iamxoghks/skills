@@ -12,6 +12,17 @@ interface CodexSessionIndexEntry {
   updated_at?: string;
 }
 
+export interface CodexSessionSummary {
+  sessionId: string;
+  sessionFile: string;
+  threadName?: string;
+  updatedAt?: string;
+  lastActivity?: string;
+  totalTokens: number;
+  totalCost: number;
+  modelsUsed?: string[];
+}
+
 interface CodexLogEntry {
   timestamp?: string;
   type?: string;
@@ -36,6 +47,48 @@ interface CodexLogEntry {
 }
 
 export class DataFetcher {
+  async listSessions(options: {
+    limit?: number;
+    query?: string;
+  } = {}): Promise<CodexSessionSummary[]> {
+    const limit = Math.max(1, Math.min(options.limit ?? 10, 100));
+    const query = options.query?.toLowerCase();
+    const indexEntries = await this.readSessionIndex();
+    const indexById = new Map(indexEntries.map((entry) => [entry.id, entry]));
+    const files = (await this.listSessionFiles()).sort().reverse();
+    const sessions: CodexSessionSummary[] = [];
+
+    for (const file of files) {
+      const sessionData = await this.readCodexSession(file);
+      const indexEntry = indexById.get(sessionData.sessionId);
+      const searchable = [
+        sessionData.sessionId,
+        file,
+        indexEntry?.thread_name,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      if (query && !searchable.includes(query)) continue;
+
+      sessions.push({
+        sessionId: sessionData.sessionId,
+        sessionFile: file,
+        threadName: indexEntry?.thread_name,
+        updatedAt: indexEntry?.updated_at,
+        lastActivity: sessionData.lastActivity,
+        totalTokens: sessionData.totalTokens,
+        totalCost: sessionData.totalCost,
+        modelsUsed: sessionData.modelsUsed,
+      });
+
+      if (sessions.length >= limit) break;
+    }
+
+    return sessions;
+  }
+
   async fetchSessionById(sessionId: string): Promise<CodexSessionUsage> {
     const sessionFile = await this.findSessionFile(sessionId);
     if (!sessionFile) {
@@ -186,15 +239,8 @@ export class DataFetcher {
   private async findSessionIdFromIndex(
     sessionQuery: string,
   ): Promise<string | undefined> {
-    const home = process.env.HOME || process.env.USERPROFILE || "";
-    const indexPath = join(home, ".codex", "session_index.jsonl");
-    if (!existsSync(indexPath)) return undefined;
-
-    const content = await readFile(indexPath, "utf-8");
-    const entries = content
-      .split("\n")
-      .filter((line) => line.trim())
-      .map((line) => JSON.parse(line) as CodexSessionIndexEntry);
+    const entries = await this.readSessionIndex();
+    if (entries.length === 0) return undefined;
 
     const match = [...entries].reverse().find((entry) => {
       return (
@@ -205,6 +251,18 @@ export class DataFetcher {
     });
 
     return match?.id;
+  }
+
+  private async readSessionIndex(): Promise<CodexSessionIndexEntry[]> {
+    const home = process.env.HOME || process.env.USERPROFILE || "";
+    const indexPath = join(home, ".codex", "session_index.jsonl");
+    if (!existsSync(indexPath)) return [];
+
+    const content = await readFile(indexPath, "utf-8");
+    return content
+      .split("\n")
+      .filter((line) => line.trim())
+      .map((line) => JSON.parse(line) as CodexSessionIndexEntry);
   }
 
   private async getMostRecentSessionFile(): Promise<string | undefined> {

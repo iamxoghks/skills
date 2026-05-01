@@ -4,13 +4,14 @@ import { Command, Option } from "commander";
 import { GenerateCommand } from "./commands/generate.js";
 import { ConfigCommand } from "./commands/config.js";
 import { SetupCommand } from "./commands/setup.js";
+import { McpCommand } from "./commands/mcp.js";
 
 const program = new Command();
 
 program
   .name("codex-receipts")
   .description("Generate quirky receipts for your Codex work sessions")
-  .version("1.1.0");
+  .version("1.2.0");
 
 // Generate command
 program
@@ -60,6 +61,15 @@ program
   .action(async (options) => {
     const command = new SetupCommand();
     await command.execute(options);
+  });
+
+// MCP stdio server command
+program
+  .command("mcp")
+  .description("Start a local stdio MCP server for Codex receipt tools")
+  .action(async () => {
+    const command = new McpCommand();
+    await command.execute();
   });
 
 // Make generate the default command if no command is specified

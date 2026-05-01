@@ -77,6 +77,31 @@ npx codex-receipts generate --location "Cheonan, KR"
 If no location is configured, receipts use `The Cloud`. Codex Receipts does not
 auto-detect location from your public IP or call an external geolocation service.
 
+Start the local stdio MCP server:
+
+```bash
+npx codex-receipts mcp
+```
+
+The MCP server exposes:
+
+- `list_codex_sessions`: list recent local Codex sessions from `~/.codex`
+- `generate_codex_receipt`: generate a text receipt and optionally save HTML
+  under `~/.codex-receipts/projects`
+
+Example MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "codex-receipts": {
+      "command": "npx",
+      "args": ["-y", "codex-receipts", "mcp"]
+    }
+  }
+}
+```
+
 ## Configuration
 
 Configuration is stored at:
@@ -113,6 +138,12 @@ remote service.
 - `console`: boxed terminal receipt
 - `html`: saves to `~/.codex-receipts/projects/[session-id].html`
 - `printer`: sends ESC/POS output to USB, TCP, or CUPS receipt printers
+
+## Codex Skill
+
+This repo includes a Codex skill at `skills/codex-receipts`. The skill tells
+agents to use the published npm CLI for latest or specific session receipts,
+console/HTML/printer outputs, and local-only privacy expectations.
 
 ## Notes
 
