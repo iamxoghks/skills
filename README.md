@@ -2,7 +2,7 @@
 
 Thermal-printer-style receipts for Codex work sessions.
 
-This fork turns the original `claude-receipts` idea into a Codex-native toy: it reads local Codex session logs, counts the visible work trail, and prints a tiny "proof of work" receipt for the latest session.
+This fork turns the original [`claude-receipts`](https://github.com/chrishutchinson/claude-receipts) idea into a Codex-native toy: it reads local Codex session logs, counts the visible work trail, and prints a tiny "proof of work" receipt for the latest session.
 
 ## What It Prints
 
