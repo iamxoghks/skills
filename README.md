@@ -74,6 +74,9 @@ Override location:
 npx codex-receipts generate --location "Cheonan, KR"
 ```
 
+If no location is configured, receipts use `The Cloud`. Codex Receipts does not
+auto-detect location from your public IP or call an external geolocation service.
+
 ## Configuration
 
 Configuration is stored at:
@@ -102,6 +105,8 @@ Codex Receipts reads:
 ```
 
 It only reads local Codex session files and writes generated receipts under `~/.codex-receipts`.
+Receipt generation does not send session contents or public IP information to a
+remote service.
 
 ## Outputs
 
