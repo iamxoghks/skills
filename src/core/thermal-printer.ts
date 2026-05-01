@@ -241,7 +241,7 @@ export class ThermalPrinterRenderer {
         // Model name with its cost
         b.bold(true);
         b.leftRight(
-          this.getModelName(model.modelName),
+          this.getModelName(model.modelName, labels),
           this.formatPoints(model.cost),
         );
         b.bold(false);
@@ -446,7 +446,10 @@ export class ThermalPrinterRenderer {
     }
   }
 
-  private getModelName(model: string): string {
+  private getModelName(model: string, labels?: ReturnType<typeof getReceiptLabels>): string {
+    const localized = labels?.breakdowns[model];
+    if (localized) return localized;
+
     return model
       .replace(/^gpt-/, "GPT-")
       .replace(/^codex$/, "Codex")

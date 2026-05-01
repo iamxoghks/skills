@@ -19,6 +19,7 @@ export interface ReceiptLabels {
   footerMessage: string;
   printYourOwn: string;
   generatedBy: string;
+  breakdowns: Record<string, string>;
 }
 
 const LABELS: Record<ReceiptLocale, ReceiptLabels> = {
@@ -41,6 +42,12 @@ const LABELS: Record<ReceiptLocale, ReceiptLabels> = {
     footerMessage: "Proof of work, but cute.",
     printYourOwn: "Print your own Codex receipts:",
     generatedBy: "Print your own",
+    breakdowns: {
+      "User prompts": "User Prompts",
+      "Assistant replies": "Assistant Replies",
+      "Tool calls": "Tool Calls",
+      "Context tokens": "Context Tokens",
+    },
   },
   ko: {
     location: "위치",
@@ -61,6 +68,12 @@ const LABELS: Record<ReceiptLocale, ReceiptLabels> = {
     footerMessage: "연봉 협상 때 이거 언급해.",
     printYourOwn: "Codex 영수증 직접 뽑기:",
     generatedBy: "직접 뽑아보세요",
+    breakdowns: {
+      "User prompts": "사용자 프롬프트",
+      "Assistant replies": "어시스턴트 응답",
+      "Tool calls": "도구 호출",
+      "Context tokens": "컨텍스트 토큰",
+    },
   },
 };
 

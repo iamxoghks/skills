@@ -156,7 +156,40 @@ function testHtmlEscaping() {
         totalTokens: 0,
         totalCost: 0,
         modelsUsed: ["codex"],
-        modelBreakdowns: [],
+        modelBreakdowns: [
+          {
+            modelName: "User prompts",
+            inputTokens: 1,
+            outputTokens: 0,
+            cacheCreationTokens: 0,
+            cacheReadTokens: 0,
+            cost: 3,
+          },
+          {
+            modelName: "Assistant replies",
+            inputTokens: 0,
+            outputTokens: 1,
+            cacheCreationTokens: 0,
+            cacheReadTokens: 0,
+            cost: 5,
+          },
+          {
+            modelName: "Tool calls",
+            inputTokens: 1,
+            outputTokens: 1,
+            cacheCreationTokens: 0,
+            cacheReadTokens: 0,
+            cost: 10,
+          },
+          {
+            modelName: "Context tokens",
+            inputTokens: 1000,
+            outputTokens: 100,
+            cacheCreationTokens: 0,
+            cacheReadTokens: 0,
+            cost: 2,
+          },
+        ],
         projectPath: "/tmp/session.jsonl",
       },
     },
@@ -169,6 +202,10 @@ function testHtmlEscaping() {
     "날짜",
     "합계",
     "연봉 협상 때 이거 언급해.",
+    "사용자 프롬프트",
+    "어시스턴트 응답",
+    "도구 호출",
+    "컨텍스트 토큰",
   ]) {
     if (!koreanHtml.includes(expected)) {
       throw new Error(`Korean HTML receipt is missing "${expected}".`);

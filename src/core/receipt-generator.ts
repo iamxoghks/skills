@@ -57,7 +57,7 @@ export class ReceiptGenerator {
       for (const model of data.sessionData.modelBreakdowns) {
         lines.push(
           this.padLine(
-            this.getModelName(model.modelName),
+            this.getModelName(model.modelName, labels),
             "",
             this.formatReceiptPoints(model.cost),
           ),
@@ -200,7 +200,10 @@ export class ReceiptGenerator {
   /**
    * Get a clean model name
    */
-  private getModelName(model: string): string {
+  private getModelName(model: string, labels?: ReturnType<typeof getReceiptLabels>): string {
+    const localized = labels?.breakdowns[model];
+    if (localized) return localized;
+
     return model
       .replace(/^gpt-/, "GPT-")
       .replace(/^codex$/, "Codex")

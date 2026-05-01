@@ -322,7 +322,7 @@ export class HtmlRenderer {
     ) {
       for (const model of data.sessionData.modelBreakdowns) {
         html += `<div class="model-header">
-          <span class="model-name">${this.escapeHtml(this.getModelName(model.modelName))}</span>
+          <span class="model-name">${this.escapeHtml(this.getModelName(model.modelName, labels))}</span>
           <span class="model-cost">${this.formatPoints(model.cost)}</span>
         </div>`;
 
@@ -359,7 +359,10 @@ export class HtmlRenderer {
   /**
    * Get clean model name
    */
-  private getModelName(model: string): string {
+  private getModelName(model: string, labels?: ReturnType<typeof getReceiptLabels>): string {
+    const localized = labels?.breakdowns[model];
+    if (localized) return localized;
+
     return model
       .replace(/^gpt-/, "GPT-")
       .replace(/^codex$/, "Codex")
