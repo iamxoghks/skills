@@ -36,8 +36,8 @@ program
   )
   .option("-l, --location <text>", "Override receipt location")
   .addOption(
-    new Option("--locale <locale>", "Receipt language: en or ko")
-      .choices(["en", "ko"]),
+    new Option("--locale <locale>", "Receipt language: en, ko, ja, or zh")
+      .choices(["en", "ko", "ja", "zh"]),
   )
   .option("--cashier-label <text>", "Override the cashier label")
   .option("--cashier <text>", "Override the cashier value")

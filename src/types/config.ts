@@ -5,7 +5,7 @@ export interface ReceiptConfig {
   location?: string;
   timezone?: string;
   printer?: string;
-  locale?: "en" | "ko";
+  locale?: "en" | "ko" | "ja" | "zh";
   cashierLabel?: string;
   cashier?: string;
   footerMessage?: string;

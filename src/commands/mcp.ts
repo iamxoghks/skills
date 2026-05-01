@@ -67,7 +67,7 @@ export class McpCommand {
             .optional()
             .describe("Optional location text to print on the receipt."),
           locale: z
-            .enum(["en", "ko"])
+            .enum(["en", "ko", "ja", "zh"])
             .optional()
             .describe("Optional receipt language. Defaults to config or en."),
           cashierLabel: z

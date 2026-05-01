@@ -95,8 +95,8 @@ export class ConfigCommand {
       );
     }
 
-    if (trimmedKey === "locale" && !["en", "ko"].includes(value)) {
-      throw new Error('Invalid locale. Valid values: "en", "ko"');
+    if (trimmedKey === "locale" && !["en", "ko", "ja", "zh"].includes(value)) {
+      throw new Error('Invalid locale. Valid values: "en", "ko", "ja", "zh"');
     }
 
     // Update config

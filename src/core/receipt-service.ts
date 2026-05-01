@@ -15,7 +15,7 @@ export interface GenerateReceiptRequest {
   location?: string;
   saveHtml?: boolean;
   printer?: string;
-  locale?: "en" | "ko";
+  locale?: "en" | "ko" | "ja" | "zh";
   cashierLabel?: string;
   cashier?: string;
   footerMessage?: string;

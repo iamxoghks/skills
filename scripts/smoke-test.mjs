@@ -259,6 +259,38 @@ function testHtmlEscaping() {
   if (customizedHtml.includes("CASHIER: GPT-5.5")) {
     throw new Error("Customized HTML receipt leaked the default cashier text.");
   }
+
+  const japaneseHtml = renderer.generateHtml(
+    {
+      ...baseReceiptData("東京", "ja"),
+      sessionData: {
+        ...baseSessionData(),
+        modelBreakdowns: [{ ...baseBreakdown(), modelName: "User prompts" }],
+      },
+    },
+    "receipt",
+  );
+  for (const expected of ["場所", "合計", "ユーザープロンプト"]) {
+    if (!japaneseHtml.includes(expected)) {
+      throw new Error(`Japanese HTML receipt is missing "${expected}".`);
+    }
+  }
+
+  const chineseHtml = renderer.generateHtml(
+    {
+      ...baseReceiptData("上海", "zh"),
+      sessionData: {
+        ...baseSessionData(),
+        modelBreakdowns: [{ ...baseBreakdown(), modelName: "Tool calls" }],
+      },
+    },
+    "receipt",
+  );
+  for (const expected of ["位置", "合计", "工具调用"]) {
+    if (!chineseHtml.includes(expected)) {
+      throw new Error(`Chinese HTML receipt is missing "${expected}".`);
+    }
+  }
 }
 
 function testPrinterLocaleWarning() {
@@ -292,14 +324,63 @@ function testPrinterLocaleWarning() {
   };
 
   if (getPrinterLocaleWarning({ ...baseData, config: { locale: "en" } })) {
-    throw new Error("English receipts should not emit a Korean printer warning.");
+    throw new Error("English receipts should not emit a localized printer warning.");
   }
 
-  const warning = getPrinterLocaleWarning({
-    ...baseData,
-    config: { locale: "ko" },
-  });
-  if (!warning?.includes("UTF-8") || !warning.includes("Korean code page")) {
-    throw new Error("Korean printer warning is missing UTF-8/codepage guidance.");
+  for (const locale of ["ko", "ja", "zh"]) {
+    const warning = getPrinterLocaleWarning({
+      ...baseData,
+      config: { locale },
+    });
+    if (!warning?.includes("UTF-8") || !warning.includes("code page")) {
+      throw new Error(`${locale} printer warning is missing UTF-8/codepage guidance.`);
+    }
   }
+}
+
+function baseReceiptData(location, locale) {
+  return {
+    location,
+    config: { timezone: "UTC", locale },
+    transcriptData: {
+      sessionId: "session-id",
+      sessionSlug: "session-id",
+      startTime: new Date("2026-01-01T00:00:00.000Z"),
+      endTime: new Date("2026-01-01T00:00:00.000Z"),
+      messages: [],
+      totalMessages: 0,
+      userMessages: 0,
+      assistantMessages: 0,
+      toolUses: 0,
+      filesModified: [],
+      commandsRun: [],
+    },
+    sessionData: baseSessionData(),
+  };
+}
+
+function baseSessionData() {
+  return {
+    sessionId: "session-id",
+    inputTokens: 0,
+    outputTokens: 0,
+    cacheCreationTokens: 0,
+    cacheReadTokens: 0,
+    totalTokens: 0,
+    totalCost: 0,
+    modelsUsed: ["codex"],
+    modelBreakdowns: [],
+    projectPath: "/tmp/session.jsonl",
+  };
+}
+
+function baseBreakdown() {
+  return {
+    modelName: "codex",
+    inputTokens: 1,
+    outputTokens: 1,
+    cacheCreationTokens: 0,
+    cacheReadTokens: 0,
+    cost: 1,
+  };
 }

@@ -57,6 +57,13 @@ npx codex-receipts generate --output html
 npx codex-receipts generate --output html --locale ko
 ```
 
+일본어/중국어 영수증 생성:
+
+```bash
+npx codex-receipts generate --output html --locale ja
+npx codex-receipts generate --output html --locale zh
+```
+
 영수증 문구 덮어쓰기:
 
 ```bash
@@ -124,7 +131,7 @@ npx codex-receipts mcp
 - `generate_codex_receipt`: 텍스트 영수증 생성, 필요하면 `~/.codex-receipts/projects` 아래에 HTML 저장
 
 `generate_codex_receipt`는 선택적으로 `printer` 값을 받을 수 있습니다. 가능한 값은 `usb`, `usb:VID:PID`, `tcp://HOST:9100`, CUPS 프린터 이름입니다. `printer`가 있으면 MCP는 먼저 HTML 영수증을 저장한 뒤 프린터 출력을 시도합니다. 프린터가 연결되어 있지 않거나 찾을 수 없으면 전체 요청을 실패시키지 않고, 프린터 안내 메시지와 저장된 `htmlPath`를 반환합니다.
-`locale` 값으로 `en` 또는 `ko`를 넘기면 영어/한국어 영수증 라벨을 선택할 수 있습니다.
+`locale` 값으로 `en`, `ko`, `ja`, `zh`를 넘기면 영어/한국어/일본어/중국어 영수증 라벨을 선택할 수 있습니다.
 
 프린터 출력은 로컬 side effect입니다. MCP의 `printer` 옵션은 신뢰하는 로컬 MCP 클라이언트에서만 켜는 것을 권장합니다. 특히 `tcp://HOST:9100`은 입력한 host/port로 로컬 outbound socket을 엽니다. 이 기능은 네트워크 영수증 프린터용이지, 원격 API 호출용이 아닙니다.
 
@@ -177,7 +184,7 @@ Codex Receipts가 읽는 파일:
 ## 보안 메모
 
 - CLI와 MCP 서버는 `~/.codex`의 로컬 Codex 로그를 읽고 `~/.codex-receipts` 아래에 영수증을 씁니다.
-- 영수증 언어는 실행 시 `--locale en|ko`로 지정하거나 config에 `locale=en|ko`로 저장할 수 있습니다.
+- 영수증 언어는 실행 시 `--locale en|ko|ja|zh`로 지정하거나 config에 `locale=en|ko|ja|zh`로 저장할 수 있습니다.
 - cashier label, cashier 값, footer message는 실행 옵션이나 config로 덮어쓸 수 있습니다. `cashier`를 설정하지 않으면 세션 로그에 기록된 모델명이 자동으로 표시됩니다.
 - 위치 기본값은 `The Cloud`입니다. 공인 IP나 위치 조회 서비스를 호출하지 않습니다.
 - 외부 명령은 shell 문자열이 아니라 인자 배열로 실행합니다.
@@ -190,8 +197,8 @@ Codex Receipts가 읽는 파일:
 - `html`: `~/.codex-receipts/projects/[session-id].html` 저장
 - `printer`: USB, TCP, CUPS 영수증 프린터로 ESC/POS 출력
 
-한글 라벨은 console과 HTML 출력에서 동작합니다. 감열 프린터 한글 출력은 프린터 펌웨어/코드페이지가 UTF-8 또는 한글 텍스트를 지원해야 정상 출력됩니다.
-`--locale ko`와 `--output printer`를 함께 쓰면 CLI와 MCP 결과에 UTF-8/한글 코드페이지 지원 안내가 함께 표시됩니다.
+비영어권 라벨은 console과 HTML 출력에서 동작합니다. 감열 프린터 출력은 프린터 펌웨어/코드페이지가 UTF-8 또는 해당 언어 텍스트를 지원해야 정상 출력됩니다.
+비영어 locale과 `--output printer`를 함께 쓰면 CLI와 MCP 결과에 UTF-8/해당 언어 코드페이지 지원 안내가 함께 표시됩니다.
 
 ## Codex Skill
 

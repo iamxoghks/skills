@@ -51,10 +51,12 @@ Generate HTML:
 npx codex-receipts generate --output html
 ```
 
-Generate a Korean receipt:
+Generate a localized receipt:
 
 ```bash
 npx codex-receipts generate --output html --locale ko
+npx codex-receipts generate --output html --locale ja
+npx codex-receipts generate --output html --locale zh
 ```
 
 Override receipt text:
@@ -129,7 +131,7 @@ The MCP server exposes:
 set, MCP saves the HTML receipt before trying printer output. If the printer is
 not connected or cannot be found, the tool returns printer troubleshooting
 guidance and the saved `htmlPath` instead of failing the whole receipt request.
-It also accepts `locale` (`en` or `ko`) for English or Korean receipt labels.
+It also accepts `locale` (`en`, `ko`, `ja`, or `zh`) for localized receipt labels.
 
 Printer output is a local side effect. Only enable the MCP `printer` option in
 trusted local MCP clients, and only pass `tcp://HOST:9100` values for printers
@@ -192,8 +194,8 @@ remote service.
 
 - The CLI and MCP server read local Codex logs from `~/.codex` and write receipts
   under `~/.codex-receipts`.
-- Receipt language can be set per run with `--locale en|ko` or in config with
-  `locale=en|ko`.
+- Receipt language can be set per run with `--locale en|ko|ja|zh` or in config
+  with `locale=en|ko|ja|zh`.
 - Cashier label, cashier value, and footer message can be overridden per run or
   saved in config. If `cashier` is not set, Codex Receipts uses the model name
   recorded in the session log.
@@ -213,9 +215,9 @@ remote service.
 
 Korean labels work for console and HTML output. Thermal-printer Korean output
 depends on the printer firmware/codepage support for UTF-8 or Korean text.
-When `--locale ko` is used with `--output printer`, the CLI and MCP result show
-a reminder about UTF-8/Korean codepage support before or alongside printer
-output.
+When a non-English locale is used with `--output printer`, the CLI and MCP result
+show a reminder about UTF-8 or target-language codepage support before or
+alongside printer output.
 
 ## Codex Skill
 

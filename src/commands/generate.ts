@@ -28,7 +28,7 @@ export interface GenerateOptions {
   output?: string[];
   location?: string;
   printer?: string;
-  locale?: "en" | "ko";
+  locale?: "en" | "ko" | "ja" | "zh";
   cashierLabel?: string;
   cashier?: string;
   footerMessage?: string;
