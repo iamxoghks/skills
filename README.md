@@ -14,16 +14,24 @@ This fork turns the original [`claude-receipts`](https://github.com/chrishutchin
 
 The points are intentionally playful. They are not API billing numbers.
 
-## Install
+## Install From npm
+
+```bash
+npx codex-receipts generate --output html
+```
+
+Or install globally:
+
+```bash
+npm install -g codex-receipts
+codex-receipts generate --output html
+```
+
+## Local Development
 
 ```bash
 npm install
 npm run build
-```
-
-For local testing:
-
-```bash
 node bin/codex-receipts.js generate
 ```
 

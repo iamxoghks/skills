@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name("codex-receipts")
   .description("Generate quirky receipts for your Codex work sessions")
-  .version("1.0.0");
+  .version("1.1.0");
 
 // Generate command
 program
