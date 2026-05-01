@@ -8,6 +8,7 @@ import { DataFetcher } from "../core/data-fetcher.js";
 import { TranscriptParser } from "../core/transcript-parser.js";
 import { ReceiptGenerator } from "../core/receipt-generator.js";
 import { HtmlRenderer } from "../core/html-renderer.js";
+import { ThermalPrinterRenderer } from "../core/thermal-printer.js";
 import { ConfigManager } from "../core/config-manager.js";
 import { LocationDetector } from "../utils/location.js";
 import type { ReceiptData } from "../core/receipt-generator.js";
@@ -19,12 +20,13 @@ interface CodexHookData {
   transcript_path?: string;
 }
 
-export type OutputFormat = "html" | "console";
+export type OutputFormat = "html" | "console" | "printer";
 
 export interface GenerateOptions {
   session?: string;
   output?: string[];
   location?: string;
+  printer?: string;
 }
 
 export class GenerateCommand {
@@ -32,6 +34,7 @@ export class GenerateCommand {
   private transcriptParser = new TranscriptParser();
   private receiptGenerator = new ReceiptGenerator();
   private htmlRenderer = new HtmlRenderer();
+  private thermalPrinter = new ThermalPrinterRenderer();
   private configManager = new ConfigManager();
   private locationDetector = new LocationDetector();
 
@@ -120,6 +123,9 @@ export class GenerateCommand {
       for (const format of outputFormats) {
         try {
           switch (format) {
+            case "printer":
+              await this.outputToPrinter(receiptData, options, config, spinner);
+              break;
             case "html":
               await this.outputToHtml(
                 receiptData,
@@ -163,6 +169,27 @@ export class GenerateCommand {
 
       process.exit(1);
     }
+  }
+
+  /**
+   * Send receipt to a thermal printer.
+   */
+  private async outputToPrinter(
+    receiptData: ReceiptData,
+    options: GenerateOptions,
+    config: { printer?: string },
+    spinner: ReturnType<typeof ora>,
+  ): Promise<void> {
+    const printerInterface = options.printer || config.printer;
+    if (!printerInterface) {
+      throw new Error(
+        'No printer specified. Use --printer <name> or set via: codex-receipts config --set printer=EPSON_TM_T88V',
+      );
+    }
+
+    spinner.start("Sending to printer...");
+    await this.thermalPrinter.printReceipt(receiptData, printerInterface);
+    spinner.succeed(`Receipt sent to printer: ${printerInterface}`);
   }
 
   /**

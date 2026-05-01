@@ -18,10 +18,10 @@ program
   .description("Generate a receipt for a Codex session")
   .option("-s, --session <id>", "Specific session ID to generate receipt for")
   .addOption(
-    new Option("-o, --output <format...>", "Output format(s): html, console (comma-separated or repeated)")
+    new Option("-o, --output <format...>", "Output format(s): html, console, printer (comma-separated or repeated)")
       .argParser((value: string, prev: string[] | undefined) => {
         const formats = value.split(",").map((s) => s.trim()).filter(Boolean);
-        const valid = ["html", "console"];
+        const valid = ["html", "console", "printer"];
         for (const f of formats) {
           if (!valid.includes(f)) {
             throw new Error(`Invalid output format "${f}". Valid formats: ${valid.join(", ")}`);
@@ -31,6 +31,10 @@ program
       }),
   )
   .option("-l, --location <text>", "Override location detection")
+  .option(
+    "-p, --printer <interface>",
+    'Printer: "usb" (auto-detect), "usb:VID:PID", "tcp://host:port", or CUPS name',
+  )
   .action(async (options) => {
     const command = new GenerateCommand();
     await command.execute(options);

@@ -47,6 +47,12 @@ Generate console output:
 npx codex-receipts generate --output console
 ```
 
+Print to a thermal receipt printer:
+
+```bash
+npx codex-receipts generate --output printer --printer usb
+```
+
 Generate for a specific session id, id prefix, or thread-name fragment:
 
 ```bash
@@ -74,6 +80,7 @@ Run:
 npx codex-receipts setup
 npx codex-receipts config --show
 npx codex-receipts config --set timezone="Asia/Seoul"
+npx codex-receipts config --set printer=usb
 npx codex-receipts config --reset
 ```
 
@@ -92,6 +99,7 @@ It only reads local Codex session files and writes generated receipts under `~/.
 
 - `console`: boxed terminal receipt
 - `html`: saves to `~/.codex-receipts/projects/[session-id].html`
+- `printer`: sends ESC/POS output to USB, TCP, or CUPS receipt printers
 
 ## Notes
 

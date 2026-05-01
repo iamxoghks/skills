@@ -17,6 +17,7 @@ node bin/codex-receipts.js generate --output html
 - `src/core/transcript-parser.ts` extracts session id, prompt, timestamps, and message counts from Codex JSONL logs.
 - `src/core/receipt-generator.ts` renders console receipt text.
 - `src/core/html-renderer.ts` renders standalone HTML receipts into `~/.codex-receipts/projects`.
+- `src/core/thermal-printer.ts` renders ESC/POS output for physical receipt printers.
 
 ## Important Behavior
 
