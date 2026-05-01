@@ -2,15 +2,27 @@
  * ASCII art headers for receipts
  */
 
-export const CODEX_LOGO = `     ▐▛███▜▌
-    ▝▜█████▛▘
-      ▘▘ ▝▝   `;
+export const CODEX_DOT_LOGO = [
+  "     ●●●     ",
+  "   ●●   ●●   ",
+  "  ●       ●  ",
+  " ●  ●●●●  ● ",
+  " ● ●    ● ● ",
+  "  ● ●  ● ●  ",
+  "   ●●●●●   ",
+  "  ● ●  ● ●  ",
+  " ● ●    ● ● ",
+  " ●  ●●●●  ● ",
+  "  ●       ●  ",
+  "   ●●   ●●   ",
+  "     ●●●     ",
+].join("\n");
 
 /**
  * Get the Codex receipt logo
  */
 export function getHeader(): string {
-  return CODEX_LOGO;
+  return CODEX_DOT_LOGO;
 }
 
 /**

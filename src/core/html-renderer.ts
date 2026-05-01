@@ -6,6 +6,30 @@ export class HtmlRenderer {
    * Generate HTML receipt with embedded CSS
    */
   generateHtml(data: ReceiptData, receiptText: string): string {
+    const logoRows = [
+      "0000011100000",
+      "0001100011000",
+      "0010000001000",
+      "0100111100100",
+      "0101000010100",
+      "0010100101000",
+      "0001111100000",
+      "0010100101000",
+      "0101000010100",
+      "0100111100100",
+      "0010000001000",
+      "0001100011000",
+      "0000011100000",
+    ];
+    const logoHtml = logoRows
+      .map(
+        (row) =>
+          `<div class="logo-row">${[...row]
+            .map((cell) => `<span class="${cell === "1" ? "on" : ""}"></span>`)
+            .join("")}</div>`,
+      )
+      .join("");
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,11 +119,29 @@ export class HtmlRenderer {
     }
 
     .logo {
-      line-height: 1.2;
-      font-weight: bold;
-      white-space: pre;
-      display: inline-block;
-      margin: 10px 0;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+      margin: 10px 0 14px;
+      padding: 2px;
+    }
+
+    .logo-row {
+      display: flex;
+      gap: 3px;
+      height: 5px;
+    }
+
+    .logo span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      display: block;
+      background: transparent;
+    }
+
+    .logo span.on {
+      background: #111;
     }
 
     .separator {
@@ -243,10 +285,7 @@ export class HtmlRenderer {
   <div class="receipt-container">
     <div class="receipt">
       <div class="header">
-        <div class="logo"> ▐▛███▜▌
- ▝▜█████▛▘
- ▘▘ ▝▝
-</div>
+        <div class="logo" aria-label="Codex dot logo">${logoHtml}</div>
         <div class="meta">
           <div class="meta-row">
             <div>Location</div><div class="dots">....................</div><div class="value">${this.escapeHtml(data.location)}</div>

@@ -23,9 +23,6 @@ const LF = 0x0a;
 
 // CP437 block characters (raw byte values — not UTF-8)
 const BLK = 0xdb; // █ full block
-const UPH = 0xdf; // ▀ upper half block
-const LFH = 0xdd; // ▌ left half block
-const RHF = 0xde; // ▐ right half block
 
 /** Tiny buffer builder for ESC/POS byte sequences. */
 class EscPosBuilder {
@@ -60,38 +57,31 @@ class EscPosBuilder {
 
   /**
    * Print the receipt logo using CP437 block characters.
-   * 5-row character: solid head, eyes, wider arms, solid body, legs.
    */
   logo(): this {
     this.align("center");
-    // Row 1 (solid head):  ▐██████████▌
-    this.raw(RHF, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, LFH, LF);
-    // Row 2 (eyes):        ██ ██ ██
-    this.raw(RHF, BLK, BLK, 0x20, BLK, BLK, BLK, BLK, 0x20, BLK, BLK, LFH, LF);
-    // Row 3 (arms, wider): ▐████████▌
-    this.raw(
-      RHF,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      BLK,
-      LFH,
-      LF,
-    );
-    // Row 4 (solid body):  ▐██████▌
-    this.raw(RHF, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, BLK, LFH, LF);
-    // Row 5 (legs):         ▀▀  ▀▀
-    this.raw(UPH, 0x20, UPH, 0x20, 0x20, UPH, 0x20, UPH, LF);
+    const rows = [
+      "     ███     ",
+      "   ██   ██   ",
+      "  █       █  ",
+      " █  ████  █ ",
+      " █ █    █ █ ",
+      "  █ █  █ █  ",
+      "   █████   ",
+      "  █ █  █ █  ",
+      " █ █    █ █ ",
+      " █  ████  █ ",
+      "  █       █  ",
+      "   ██   ██   ",
+      "     ███     ",
+    ];
+
+    for (const row of rows) {
+      for (const char of row) {
+        this.raw(char === "█" ? BLK : 0x20);
+      }
+      this.raw(LF);
+    }
     return this;
   }
 
