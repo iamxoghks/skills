@@ -13,7 +13,8 @@ Generate receipt-style summaries from local Codex session logs using the publish
 - The user wants the latest Codex session summarized.
 - The user provides a specific session id, id prefix, or thread-name fragment.
 - The user asks for console, HTML, or thermal-printer receipt output.
-- The user asks for an English or Korean receipt.
+- The user asks for an English, Korean, Japanese, or Chinese receipt.
+- The user asks to set receipt location, language, cashier text, footer text, or printer output.
 - The user asks whether receipt generation is local/private.
 
 ## Required Tool
@@ -36,6 +37,29 @@ For MCP printer output, pass `printer` as `usb`, `usb:VID:PID`, `tcp://HOST:9100
 For localized receipts, pass `--locale ko`, `--locale ja`, or `--locale zh` in the CLI, or pass `locale: "ko"`, `locale: "ja"`, or `locale: "zh"` to the MCP tool.
 If non-English printer output is requested, tell the user the printer or driver must support UTF-8 or the target language code page; otherwise text may print garbled and HTML output is the safer fallback.
 Use `--cashier-label`, `--cashier`, and `--footer-message` when the user asks to customize the receipt copy. If `--cashier` is omitted, the package uses the model name from the Codex session automatically.
+
+## Configurable Fields
+
+Per run, the CLI and MCP support:
+
+- `location`: printed location. Defaults to config or `The Cloud`; no public-IP or geolocation lookup is used.
+- `locale`: `en`, `ko`, `ja`, or `zh`.
+- `cashierLabel`: label before the cashier/model value.
+- `cashier`: value after the cashier label. Defaults to the model name recorded in the Codex session.
+- `footerMessage`: final receipt message. Defaults to the locale footer.
+- `printer`: physical printer target; only use when the user asks for printer output.
+
+Persistent CLI config supports:
+
+```bash
+npx codex-receipts config --set location="Cheonan, KR"
+npx codex-receipts config --set timezone="Asia/Seoul"
+npx codex-receipts config --set locale=ko
+npx codex-receipts config --set cashierLabel="담당"
+npx codex-receipts config --set cashier="Codex Bot"
+npx codex-receipts config --set footerMessage="오늘도 수고했음"
+npx codex-receipts config --set printer=usb
+```
 
 ## Common Commands
 

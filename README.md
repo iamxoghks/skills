@@ -131,7 +131,10 @@ The MCP server exposes:
 set, MCP saves the HTML receipt before trying printer output. If the printer is
 not connected or cannot be found, the tool returns printer troubleshooting
 guidance and the saved `htmlPath` instead of failing the whole receipt request.
-It also accepts `locale` (`en`, `ko`, `ja`, or `zh`) for localized receipt labels.
+It also accepts `location`, `locale` (`en`, `ko`, `ja`, or `zh`),
+`cashierLabel`, `cashier`, and `footerMessage`. If `cashier` is omitted, the
+receipt uses the model name recorded in the Codex session. Location defaults to
+config or `The Cloud`; no public-IP or geolocation lookup is performed.
 
 Printer output is a local side effect. Only enable the MCP `printer` option in
 trusted local MCP clients, and only pass `tcp://HOST:9100` values for printers

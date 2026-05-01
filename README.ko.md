@@ -131,7 +131,7 @@ npx codex-receipts mcp
 - `generate_codex_receipt`: 텍스트 영수증 생성, 필요하면 `~/.codex-receipts/projects` 아래에 HTML 저장
 
 `generate_codex_receipt`는 선택적으로 `printer` 값을 받을 수 있습니다. 가능한 값은 `usb`, `usb:VID:PID`, `tcp://HOST:9100`, CUPS 프린터 이름입니다. `printer`가 있으면 MCP는 먼저 HTML 영수증을 저장한 뒤 프린터 출력을 시도합니다. 프린터가 연결되어 있지 않거나 찾을 수 없으면 전체 요청을 실패시키지 않고, 프린터 안내 메시지와 저장된 `htmlPath`를 반환합니다.
-`locale` 값으로 `en`, `ko`, `ja`, `zh`를 넘기면 영어/한국어/일본어/중국어 영수증 라벨을 선택할 수 있습니다.
+`location`, `locale`, `cashierLabel`, `cashier`, `footerMessage`도 받을 수 있습니다. `locale` 값으로 `en`, `ko`, `ja`, `zh`를 넘기면 영어/한국어/일본어/중국어 영수증 라벨을 선택할 수 있습니다. `cashier`를 생략하면 Codex 세션 로그에 기록된 모델명이 자동으로 표시됩니다. 위치는 config 또는 `The Cloud`를 기본값으로 사용하며, 공인 IP나 위치 조회는 하지 않습니다.
 
 프린터 출력은 로컬 side effect입니다. MCP의 `printer` 옵션은 신뢰하는 로컬 MCP 클라이언트에서만 켜는 것을 권장합니다. 특히 `tcp://HOST:9100`은 입력한 host/port로 로컬 outbound socket을 엽니다. 이 기능은 네트워크 영수증 프린터용이지, 원격 API 호출용이 아닙니다.
 

@@ -54,7 +54,7 @@ export class McpCommand {
       {
         title: "Generate Codex Receipt",
         description:
-          "Generate a receipt for a local Codex session. Reads only local Codex logs, can save HTML, and can optionally attempt physical printer output.",
+          "Generate a receipt for a local Codex session. Reads only local Codex logs. Supports configurable location, locale, cashier label/value, footer message, saved HTML output, and optional physical printer output.",
         inputSchema: {
           session: z
             .string()
@@ -65,25 +65,33 @@ export class McpCommand {
           location: z
             .string()
             .optional()
-            .describe("Optional location text to print on the receipt."),
+            .describe(
+              'Optional location text to print on the receipt. Defaults to config or "The Cloud"; no IP/geolocation lookup is performed.',
+            ),
           locale: z
             .enum(["en", "ko", "ja", "zh"])
             .optional()
-            .describe("Optional receipt language. Defaults to config or en."),
+            .describe(
+              'Optional receipt language: "en", "ko", "ja", or "zh". Defaults to config or "en".',
+            ),
           cashierLabel: z
             .string()
             .optional()
-            .describe("Optional override for the cashier label."),
+            .describe(
+              'Optional override for the cashier label, for example "담당" or "Operator". Defaults to the locale label.',
+            ),
           cashier: z
             .string()
             .optional()
             .describe(
-              "Optional override for the cashier value. Defaults to the model name from the Codex session.",
+              'Optional override for the cashier value. Defaults to the model name from the Codex session, for example "GPT-5.5".',
             ),
           footerMessage: z
             .string()
             .optional()
-            .describe("Optional override for the receipt footer message."),
+            .describe(
+              "Optional override for the receipt footer message. Defaults to the locale footer.",
+            ),
           saveHtml: z
             .boolean()
             .optional()
@@ -94,7 +102,7 @@ export class McpCommand {
             .string()
             .optional()
             .describe(
-              'Optional printer interface: "usb", "usb:VID:PID", "tcp://HOST:9100", or a CUPS printer name. Printer failures are returned in the tool result.',
+              'Optional printer interface: "usb", "usb:VID:PID", "tcp://HOST:9100", or a CUPS printer name. When set, HTML is saved before printing; printer failures and encoding warnings are returned in the tool result.',
             ),
         },
       },
