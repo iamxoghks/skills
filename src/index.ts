@@ -8,13 +8,9 @@ export { GenerateCommand } from "./commands/generate.js";
 
 // Type exports
 export type {
-  CcusageSession,
-  CcusageResponse,
+  CodexSessionUsage,
+  CodexUsageResponse,
   ModelBreakdown,
-} from "./types/ccusage.js";
-export type {
-  TranscriptMessage,
-  ParsedTranscript,
-} from "./types/transcript.js";
+} from "./types/codex-usage.js";
+export type { ParsedTranscript } from "./types/transcript.js";
 export type { ReceiptConfig } from "./types/config.js";
-export type { SessionEndHookData } from "./types/session-hook.js";

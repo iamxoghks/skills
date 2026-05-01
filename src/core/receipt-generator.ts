@@ -1,4 +1,4 @@
-import type { CcusageSession } from "../types/ccusage.js";
+import type { CodexSessionUsage } from "../types/codex-usage.js";
 import type { ParsedTranscript } from "../types/transcript.js";
 import type { ReceiptConfig } from "../types/config.js";
 import {
@@ -8,7 +8,7 @@ import {
 import { getHeader, SEPARATOR, LIGHT_SEPARATOR } from "../utils/ascii-art.js";
 
 export interface ReceiptData {
-  sessionData: CcusageSession;
+  sessionData: CodexSessionUsage;
   transcriptData: ParsedTranscript;
   location: string;
   config: ReceiptConfig;
@@ -204,7 +204,7 @@ export class ReceiptGenerator {
   /**
    * Get the main model used in the session
    */
-  private getMainModel(sessionData: CcusageSession): string {
+  private getMainModel(sessionData: CodexSessionUsage): string {
     if (sessionData.modelsUsed && sessionData.modelsUsed.length > 0) {
       return this.getModelName(sessionData.modelsUsed[0]);
     }

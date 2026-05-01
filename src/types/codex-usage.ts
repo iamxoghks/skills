@@ -1,5 +1,4 @@
-// Receipt usage types. The shape is inherited from the original project,
-// but Codex Receipts fills it from local Codex JSONL session logs.
+// Receipt usage types derived from local Codex JSONL session logs.
 
 export interface ModelBreakdown {
   modelName: string;
@@ -10,7 +9,7 @@ export interface ModelBreakdown {
   cost: number;
 }
 
-export interface CcusageSession {
+export interface CodexSessionUsage {
   sessionId: string;
   inputTokens: number;
   outputTokens: number;
@@ -24,8 +23,8 @@ export interface CcusageSession {
   projectPath?: string;
 }
 
-export interface CcusageResponse {
-  sessions: CcusageSession[];
+export interface CodexUsageResponse {
+  sessions: CodexSessionUsage[];
   totals: {
     inputTokens: number;
     outputTokens: number;

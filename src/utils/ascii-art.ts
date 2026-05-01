@@ -2,7 +2,7 @@
  * ASCII art headers for receipts
  */
 
-export const CLAUDE_LOGO = `     ▐▛███▜▌
+export const CODEX_LOGO = `     ▐▛███▜▌
     ▝▜█████▛▘
       ▘▘ ▝▝   `;
 
@@ -10,7 +10,7 @@ export const CLAUDE_LOGO = `     ▐▛███▜▌
  * Get the Codex receipt logo
  */
 export function getHeader(): string {
-  return CLAUDE_LOGO;
+  return CODEX_LOGO;
 }
 
 /**

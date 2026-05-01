@@ -4,7 +4,6 @@ export interface ReceiptConfig {
   version: string;
   location?: string;
   timezone?: string;
-  printer?: string;
 }
 
 export const DEFAULT_CONFIG: ReceiptConfig = {

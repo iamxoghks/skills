@@ -8,21 +8,23 @@ import { DataFetcher } from "../core/data-fetcher.js";
 import { TranscriptParser } from "../core/transcript-parser.js";
 import { ReceiptGenerator } from "../core/receipt-generator.js";
 import { HtmlRenderer } from "../core/html-renderer.js";
-import { ThermalPrinterRenderer } from "../core/thermal-printer.js";
 import { ConfigManager } from "../core/config-manager.js";
 import { LocationDetector } from "../utils/location.js";
-import type { SessionEndHookData } from "../types/session-hook.js";
 import type { ReceiptData } from "../core/receipt-generator.js";
 
 const execAsync = promisify(exec);
 
-export type OutputFormat = "html" | "console" | "printer";
+interface CodexHookData {
+  session_id?: string;
+  transcript_path?: string;
+}
+
+export type OutputFormat = "html" | "console";
 
 export interface GenerateOptions {
   session?: string;
   output?: string[];
   location?: string;
-  printer?: string;
 }
 
 export class GenerateCommand {
@@ -30,7 +32,6 @@ export class GenerateCommand {
   private transcriptParser = new TranscriptParser();
   private receiptGenerator = new ReceiptGenerator();
   private htmlRenderer = new HtmlRenderer();
-  private thermalPrinter = new ThermalPrinterRenderer();
   private configManager = new ConfigManager();
   private locationDetector = new LocationDetector();
 
@@ -38,13 +39,12 @@ export class GenerateCommand {
     const spinner = ora("Generating receipt...").start();
 
     try {
-      // Check if stdin has data (called from hook)
+      // Check if stdin has Codex session data.
       const stdinData = await this.readStdinIfAvailable();
       let transcriptPath: string | undefined;
       let actualSessionId: string | undefined;
 
       if (stdinData) {
-        // Called from SessionEnd hook - use the transcript path directly!
         transcriptPath = stdinData.transcript_path;
         actualSessionId = stdinData.session_id;
       }
@@ -120,9 +120,6 @@ export class GenerateCommand {
       for (const format of outputFormats) {
         try {
           switch (format) {
-            case "printer":
-              await this.outputToPrinter(receiptData, options, config, spinner);
-              break;
             case "html":
               await this.outputToHtml(
                 receiptData,
@@ -169,27 +166,6 @@ export class GenerateCommand {
   }
 
   /**
-   * Send receipt to thermal printer
-   */
-  private async outputToPrinter(
-    receiptData: ReceiptData,
-    options: GenerateOptions,
-    config: { printer?: string },
-    spinner: ReturnType<typeof ora>,
-  ): Promise<void> {
-    const printerInterface = options.printer || config.printer;
-    if (!printerInterface) {
-      throw new Error(
-        'No printer specified. Use --printer <name> or set via: codex-receipts config --set printer=EPSON_TM_T88V',
-      );
-    }
-
-    spinner.start("Sending to printer...");
-    await this.thermalPrinter.printReceipt(receiptData, printerInterface);
-    spinner.succeed(`Receipt sent to printer: ${printerInterface}`);
-  }
-
-  /**
    * Save receipt as HTML and optionally open in browser
    */
   private async outputToHtml(
@@ -224,7 +200,7 @@ export class GenerateCommand {
   /**
    * Check if stdin has data and read it
    */
-  private async readStdinIfAvailable(): Promise<SessionEndHookData | null> {
+  private async readStdinIfAvailable(): Promise<CodexHookData | null> {
     return new Promise((resolve) => {
       // Check if stdin is a TTY (interactive terminal) or piped
       if (stdin.isTTY) {
@@ -247,7 +223,7 @@ export class GenerateCommand {
         clearTimeout(timeout);
         try {
           const parsed = JSON.parse(data);
-          resolve(parsed);
+          resolve(parsed && typeof parsed === "object" ? parsed : null);
         } catch {
           resolve(null);
         }
@@ -270,29 +246,6 @@ export class GenerateCommand {
         borderColor: "cyan",
       }),
     );
-  }
-
-  /**
-   * Save receipt to a file
-   */
-  private async saveToFile(
-    receipt: string,
-    outputPath: string,
-    sessionId: string,
-  ): Promise<void> {
-    const { writeFile, mkdir } = await import("fs/promises");
-    const { dirname, resolve } = await import("path");
-
-    const resolvedPath = resolve(this.expandPath(outputPath));
-    const dir = dirname(resolvedPath);
-
-    // Ensure directory exists
-    await mkdir(dir, { recursive: true });
-
-    // Write receipt to file
-    await writeFile(resolvedPath, receipt, "utf-8");
-
-    console.log(chalk.green(`Receipt saved to: ${resolvedPath}`));
   }
 
   /**

@@ -1,7 +1,10 @@
 import { existsSync } from "fs";
 import { readFile, readdir } from "fs/promises";
 import { basename, join } from "path";
-import type { CcusageSession, ModelBreakdown } from "../types/ccusage.js";
+import type {
+  CodexSessionUsage,
+  ModelBreakdown,
+} from "../types/codex-usage.js";
 
 interface CodexSessionIndexEntry {
   id: string;
@@ -33,7 +36,7 @@ interface CodexLogEntry {
 }
 
 export class DataFetcher {
-  async fetchSessionById(sessionId: string): Promise<CcusageSession> {
+  async fetchSessionById(sessionId: string): Promise<CodexSessionUsage> {
     const sessionFile = await this.findSessionFile(sessionId);
     if (!sessionFile) {
       throw new Error(`No Codex session matching "${sessionId}"`);
@@ -42,7 +45,7 @@ export class DataFetcher {
     return this.readCodexSession(sessionFile);
   }
 
-  async fetchSessionData(sessionQuery?: string): Promise<CcusageSession> {
+  async fetchSessionData(sessionQuery?: string): Promise<CodexSessionUsage> {
     const sessionFile = sessionQuery
       ? await this.findSessionFile(sessionQuery)
       : await this.getMostRecentSessionFile();
@@ -63,7 +66,9 @@ export class DataFetcher {
     return sessionData.sessionId;
   }
 
-  private async readCodexSession(sessionFile: string): Promise<CcusageSession> {
+  private async readCodexSession(
+    sessionFile: string,
+  ): Promise<CodexSessionUsage> {
     const content = await readFile(sessionFile, "utf-8");
     const entries = content
       .split("\n")

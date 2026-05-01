@@ -1,6 +1,6 @@
 # Codex Receipts
 
-Thermal-printer-style receipts for Codex work sessions.
+Receipt-style summaries for Codex work sessions.
 
 This fork turns the original [`claude-receipts`](https://github.com/chrishutchinson/claude-receipts) idea into a Codex-native toy: it reads local Codex session logs, counts the visible work trail, and prints a tiny "proof of work" receipt for the latest session.
 
@@ -86,13 +86,12 @@ Codex Receipts reads:
 ~/.codex/sessions/**/*.jsonl
 ```
 
-It does not use `ccusage`, and it does not touch `~/.claude`.
+It only reads local Codex session files and writes generated receipts under `~/.codex-receipts`.
 
 ## Outputs
 
 - `console`: boxed terminal receipt
 - `html`: saves to `~/.codex-receipts/projects/[session-id].html`
-- `printer`: keeps the original thermal-printer path, now fed by Codex work data
 
 ## Notes
 
