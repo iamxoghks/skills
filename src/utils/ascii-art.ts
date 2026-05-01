@@ -2,13 +2,30 @@
  * ASCII art headers for receipts
  */
 
-export const CODEX_WORDMARK = "       CODEX       ";
+export const CODEX_APP_LOGO = [
+  "      ████",
+  "     █████████",
+  "    ███████████",
+  "   █████████████",
+  "  ██████████████",
+  " ████ ██████████",
+  " █████ █████████",
+  " █████  █████████",
+  " █████  █████████",
+  "  ████ ██████████",
+  "  ███ ████   ████",
+  "  ██████████████",
+  "  █████████████",
+  "   ███████████",
+  "    █████████",
+  "        ████",
+].join("\n");
 
 /**
  * Get the Codex receipt logo
  */
 export function getHeader(): string {
-  return CODEX_WORDMARK;
+  return CODEX_APP_LOGO;
 }
 
 /**
