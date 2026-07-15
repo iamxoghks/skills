@@ -47,8 +47,13 @@ class PublicPackageTests(unittest.TestCase):
         self.assertIn("README.en.md", readme)
         self.assertIn("참고 영상 또는 대사·화면 구도·인물 동작", readme)
         self.assertIn("영상이\n없어도 대본이나 기획안", readme)
+        public_repo = "iam" + "xoghks/storyboard-builder"
+        self.assertIn(f"$skill-installer install https://github.com/{public_repo}", readme)
+        self.assertIn(f"npx skills add {public_repo}", readme)
         english_readme = (ROOT / "README.en.md").read_text(encoding="utf-8")
         self.assertIn("sample-storyboard-en.pdf", english_readme)
+        self.assertIn(f"$skill-installer install https://github.com/{public_repo}", english_readme)
+        self.assertIn(f"npx skills add {public_repo}", english_readme)
         skill_text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("Treat video as optional.", skill_text)
         self.assertIn("dialogue-only script or production brief", skill_text)
@@ -85,6 +90,9 @@ class PublicPackageTests(unittest.TestCase):
             if not path.is_file() or path.suffix.lower() in {".png", ".pdf", ".pyc", ".zip"}:
                 continue
             text = path.read_text(encoding="utf-8", errors="ignore")
+            if path.name in {"README.md", "README.en.md"}:
+                public_repo = "iam" + "xoghks/storyboard-builder"
+                text = text.replace(public_repo, "public-owner/storyboard-builder")
             self.assertIsNone(pattern.search(text), path)
 
     def test_no_private_text_in_binary_deliverables(self) -> None:

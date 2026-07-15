@@ -2,6 +2,8 @@
 
 [한국어](README.md) | **English**
 
+[![skills.sh installs](https://skills.sh/b/iamxoghks/storyboard-builder)](https://skills.sh/iamxoghks/storyboard-builder/storyboard-builder)
+
 Storyboard Builder is a Codex skill for turning either reference videos or
 scripts containing dialogue, framing, and character actions into detailed,
 production-ready shooting boards. Without a video, it designs cuts, framing,
@@ -42,7 +44,35 @@ PDF.
 
 ## Install
 
-From this repository:
+### Install In Codex (Recommended)
+
+Enter this command in a Codex conversation:
+
+```text
+$skill-installer install https://github.com/iamxoghks/storyboard-builder/tree/main/storyboard-builder
+```
+
+Restart Codex after installation, then invoke the skill with
+`$storyboard-builder`.
+
+### Install With The skills.sh CLI
+
+You can also install it globally for Codex through the public Agent Skills CLI:
+
+```bash
+npx skills add iamxoghks/storyboard-builder \
+  --skill storyboard-builder \
+  --global \
+  --agent codex \
+  --yes
+```
+
+See the [Storyboard Builder page on skills.sh](https://skills.sh/iamxoghks/storyboard-builder/storyboard-builder)
+for public installation details and install counts.
+
+### Install From A Checkout
+
+After cloning this repository, run:
 
 ```bash
 ./scripts/install.sh
