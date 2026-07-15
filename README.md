@@ -123,8 +123,8 @@ python3 storyboard-builder/scripts/analyze_video.py reference.mp4 \
 ## 테스트
 
 ```bash
-python3 -m unittest discover -s tests -v
-python3 tests/smoke_test.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 python3 tests/smoke_test.py
 ```
 
 GitHub Actions는 Linux에서 필요한 실행 환경을 설치하고 두 명령을 실행합니다.

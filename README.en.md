@@ -117,8 +117,8 @@ captures, real names, local absolute paths, or project-specific dialogue.
 ## Test
 
 ```bash
-python3 -m unittest discover -s tests -v
-python3 tests/smoke_test.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 python3 tests/smoke_test.py
 ```
 
 The GitHub Actions workflow installs the required runtimes and executes both
