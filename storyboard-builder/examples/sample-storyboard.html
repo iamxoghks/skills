@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>홍보 영상 스토리보드 예시</title>
+  <style>
+    * { box-sizing: border-box; }
+    @page { size: A4 portrait; margin: 9mm; }
+    body {
+      margin: 0;
+      background: #e9e9e7;
+      color: #111;
+      font-family: "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px 18px 56px; }
+    .cover { background: #fff; border: 1.5px solid #222; padding: 18px 22px; margin-bottom: 22px; }
+    h1 { margin: 0 0 10px; font-size: 28px; letter-spacing: 0; }
+    .cover p { margin: 5px 0; font-size: 14px; line-height: 1.55; }
+    .framing-guide { margin-top: 22px; padding-top: 16px; border-top: 1.5px solid #777; }
+    .framing-guide h2 { margin: 0 0 12px; font-size: 17px; letter-spacing: 0; }
+    .guide-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(190px, 1fr); gap: 16px; align-items: start; }
+    .guide-frame { width: 100%; aspect-ratio: 16 / 9; border: 4px solid #111; overflow: hidden; background: #fff; }
+    .guide-frame img { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; }
+    .guide-legend { display: grid; gap: 10px; font-size: 11px; line-height: 1.42; word-break: keep-all; }
+    .guide-item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: start; }
+    .guide-key { width: 24px; height: 14px; margin-top: 2px; display: block; }
+    .guide-key-frame { border-top: 4px solid #111; }
+    .guide-key-safe { border-top: 3px dashed #72a9d2; }
+    .guide-key-sides { border: 1px solid #999; background: #e7e7e7; }
+    .guide-key-subject { border-left: 5px solid #111; border-right: 5px solid #111; }
+    .page { background: #fff; border: 1.5px solid #222; margin: 0 0 28px; break-after: page; }
+    .page-head { display: grid; grid-template-columns: 1fr auto; border-bottom: 1.5px solid #222; font-size: 13px; }
+    .page-head div { padding: 6px 8px; }
+    .page-title { font-weight: 700; }
+    .page-no { min-width: 76px; border-left: 1.5px solid #222; text-align: center; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { border-right: 1.5px solid #222; border-bottom: 1.5px solid #222; vertical-align: top; }
+    th:last-child, td:last-child { border-right: 0; }
+    tbody tr:last-child td { border-bottom: 0; }
+    th { padding: 6px; text-align: center; font-size: 15px; font-weight: 800; background: #fafafa; }
+    .cut-col { width: 6.5%; }
+    .pic-col { width: 39%; }
+    .cap-col { width: 47%; }
+    .dur-col { width: 7.5%; }
+    .cut-cell { padding: 8px 4px; text-align: center; font-size: 15px; font-weight: 800; }
+    .timecode { display: block; margin-top: 8px; font-size: 11px; font-weight: 500; line-height: 1.35; }
+    .picture { padding: 7px; background: #fff; vertical-align: middle; }
+    .picture-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 3px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+    }
+    .picture-frame img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; background: #fff; }
+    .caption { padding: 0; font-size: 11px; line-height: 1.42; }
+    .caption-grid { display: grid; grid-template-columns: 1.42fr 1fr 0.68fr; min-height: 214px; height: 100%; }
+    .caption-block { padding: 7px 8px; border-right: 1px solid #999; overflow-wrap: anywhere; }
+    .caption-block:last-child { border-right: 0; }
+    .caption-label { display: block; margin-bottom: 5px; font-size: 10px; font-weight: 800; }
+    .caption-text { white-space: pre-line; }
+    .duration { padding: 8px 3px; text-align: center; font-size: 12px; font-weight: 700; }
+    @media print {
+      html, body { background: #fff; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { max-width: none; padding: 0; }
+      .cover {
+        width: 192mm;
+        max-width: 192mm;
+        min-height: 279mm;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        break-after: page;
+        page-break-after: always;
+      }
+      .framing-guide { margin-top: 16px; padding-top: 12px; }
+      .framing-guide h2 { margin-bottom: 9px; font-size: 14px; }
+      .guide-grid { grid-template-columns: minmax(0, 1.5fr) minmax(160px, 1fr); gap: 12px; }
+      .guide-legend { gap: 7px; font-size: 8.5px; line-height: 1.35; }
+      .guide-item { grid-template-columns: 24px 1fr; gap: 6px; }
+      .guide-key { width: 20px; height: 11px; }
+      .page {
+        width: 192mm;
+        max-width: 192mm;
+        margin: 0;
+        border-width: 1px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        break-after: page;
+        page-break-after: always;
+      }
+      .page:last-child { break-after: auto; page-break-after: auto; }
+      thead { display: table-header-group; }
+      tbody tr { break-inside: avoid; page-break-inside: avoid; }
+      .cut-col { width: 6%; }
+      .pic-col { width: 46%; }
+      .cap-col { width: 40%; }
+      .dur-col { width: 8%; }
+      .picture { padding: 5px; }
+      .caption { font-size: 8.5px; line-height: 1.3; }
+      .caption-grid { min-height: 0; grid-template-columns: 1.55fr 0.95fr 0.65fr; }
+      .caption-text { word-break: keep-all; overflow-wrap: normal; }
+      .caption-block { padding: 5px 6px; }
+      .caption-label { font-size: 8px; }
+      .cut-cell, th { font-size: 10px; }
+      .timecode, .duration { font-size: 8px; }
+    }
+    @media (max-width: 760px) {
+      main { padding: 14px 8px 36px; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .page { overflow-x: auto; }
+      table { min-width: 1040px; }
+    }
+  </style>
+</head>
+<body>
+<main data-storyboard-pages="2">
+
+  <section class="cover" data-storyboard-cover>
+    <h1>홍보 영상 스토리보드 예시</h1>
+    <p>구성: 단편 서사형 촬영 콘티, 4컷, 12초</p><p>등장인물: 진행자, 참가자 가, 참가자 나, 참가자들</p><p>촬영 기준: 16:9로 촬영하되 주요 얼굴과 소품은 중앙 9:16 영역 안에 배치한다.</p><p>촬영 기준: 상단 고정 제목은 사용하지 않는다.</p><p>촬영 기준: 그림 안에는 반드시 읽혀야 하는 문구를 넣지 않는다.</p>
+    <section class="framing-guide" aria-label="화면 구성 가이드">
+      <h2>화면 구성 가이드</h2>
+      <div class="guide-grid">
+        <div class="guide-frame"><img src="sample-storyboard_assets/cut-01.png" alt="화면 구성 가이드"></div>
+        <div class="guide-legend"><div class="guide-item"><span class="guide-key guide-key-frame" aria-hidden="true"></span><span>검은 외곽선: 가로형으로 촬영되는 전체 16:9 화면입니다.</span></div><div class="guide-item"><span class="guide-key guide-key-safe" aria-hidden="true"></span><span>파란 세로 점선 사이: 세로형으로 잘라도 남는 중앙 9:16 안전 영역입니다.</span></div><div class="guide-item"><span class="guide-key guide-key-sides" aria-hidden="true"></span><span>점선 바깥 좌우 영역: 가로형에서는 보이지만 세로형 변환 시 잘릴 수 있습니다.</span></div><div class="guide-item"><span class="guide-key guide-key-subject" aria-hidden="true"></span><span>주요 얼굴과 손동작, 핵심 소품은 파란 점선 사이에 배치합니다.</span></div></div>
+      </div>
+    </section>
+  </section>
+  <section class="page" data-storyboard-page data-page-label="쪽">
+    <div class="page-head"><div class="page-title">홍보 영상 스토리보드 예시</div><div class="page-no">1 쪽</div></div>
+    <table>
+      <thead><tr><th class="cut-col">컷</th><th class="pic-col">그림</th><th class="cap-col">설명</th><th class="dur-col">길이</th></tr></thead>
+      <tbody>
+        <tr data-cut-number="1">
+          <td class="cut-cell">1<span class="timecode">00:00<br>00:03</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-01.png" alt="컷 1 그림"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">행동 메모</span>
+        <div class="caption-text">장면명: 도입 대사
+화면: 인물 근접 화면
+동작: 진행자가 모임을 향해 상체를 살짝 기울이며 첫 대사를 건넨다.
+세로 전환: 진행자의 눈과 입이 중앙 세로 영역 안에 들어오도록 한다.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">대사</span>
+        <div class="caption-text">진행자: 이제 시작할 준비가 됐습니다.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">효과음</span>
+        <div class="caption-text">낮게 긴장감을 주는 음악이 시작된다.</div>
+      </div>
+    </div></td>
+          <td class="duration">3초</td>
+        </tr>
+        <tr data-cut-number="2">
+          <td class="cut-cell">2<span class="timecode">00:03<br>00:06</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-02.png" alt="컷 2 그림"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">행동 메모</span>
+        <div class="caption-text">장면명: 눈빛 교환
+화면: 두 사람 반응 화면
+동작: 참가자 가와 참가자 나가 말없이 서로 눈치를 본다. 참가자 가는 빈 소품 쪽으로 손을 뻗는다.
+세로 전환: 두 사람의 얼굴과 뻗은 손이 중앙 영역 안에 들어오도록 한다.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">대사</span>
+        <div class="caption-text">대사 없음.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">효과음</span>
+        <div class="caption-text">잔잔한 실내 배경음이 이어진다.</div>
+      </div>
+    </div></td>
+          <td class="duration">3초</td>
+        </tr>
+        <tr data-cut-number="3">
+          <td class="cut-cell">3<span class="timecode">00:06<br>00:09</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-03.png" alt="컷 3 그림"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">행동 메모</span>
+        <div class="caption-text">장면명: 움직임 제지
+화면: 중간 거리 화면
+동작: 참가자 가가 자리에서 반쯤 일어나 한쪽 손바닥을 내밀며 모두의 움직임을 멈춘다.
+세로 전환: 참가자 가의 얼굴과 내민 손을 세로 자르기 안내선 사이에 둔다.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">대사</span>
+        <div class="caption-text">참가자 가: 잠깐만요.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">효과음</span>
+        <div class="caption-text">음악이 갑자기 끊긴다.</div>
+      </div>
+    </div></td>
+          <td class="duration">3초</td>
+        </tr>
+        <tr data-cut-number="4">
+          <td class="cut-cell">4<span class="timecode">00:09<br>00:12</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-04.png" alt="컷 4 그림"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">행동 메모</span>
+        <div class="caption-text">장면명: 안내판 공개
+화면: 넓은 화면
+동작: 진행자가 빈 안내판을 들어 올리자 참가자들이 움직임을 멈추고 안내판을 바라본다.
+세로 전환: 진행자와 안내판, 참가자 가와 주요 반응 인물을 화면 중앙 가까이에 둔다.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">대사</span>
+        <div class="caption-text">대사 없음.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">효과음</span>
+        <div class="caption-text">짧은 강조음 뒤에 정적이 흐른다.</div>
+      </div>
+    </div></td>
+          <td class="duration">3초</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "title": "Project Storyboard",
+  "format": "Narrative shooting board",
+  "estimated_duration": "8 sec",
+  "cast": [
+    "Presenter",
+    "Participant"
+  ],
+  "shooting_notes": [
+    "Shoot in 16:9 and keep essential faces and props inside the central 9:16 area.",
+    "Do not place required readable text inside the drawings."
+  ],
+  "include_cover": true,
+  "include_framing_guide": true,
+  "cuts_per_page": 4,
+  "html_lang": "en",
+  "cuts": [
+    {
+      "number": 1,
+      "start": "00:00",
+      "end": "00:04",
+      "duration": "4 sec",
+      "scene": "Opening beat",
+      "shot": "Medium shot",
+      "action": "Describe the speaker, listener, background behavior, gesture, and prop movement.",
+      "vertical_crop": "Describe the subjects that must remain inside the central 9:16 area.",
+      "dialogue": "Presenter: Replace this line.",
+      "sound": "Describe music, ambience, and sound effects.",
+      "image": "images/cut-01.png"
+    },
+    {
+      "number": 2,
+      "start": "00:04",
+      "end": "00:08",
+      "duration": "4 sec",
+      "scene": "Reaction beat",
+      "shot": "Close-up",
+      "action": "Describe a silent glance, hesitation, interruption, or response.",
+      "vertical_crop": "Keep the essential face and gesture inside the central area.",
+      "dialogue": "None.",
+      "sound": "Describe the transition or room tone.",
+      "image": "images/cut-02.png"
+    }
+  ]
+}

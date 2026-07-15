@@ -1,0 +1,74 @@
+{
+  "title": "Sample Promotional Video Storyboard",
+  "format": "Short narrative shooting board",
+  "estimated_duration": "12 sec",
+  "cast": [
+    "Presenter",
+    "Participant A",
+    "Participant B",
+    "Participants"
+  ],
+  "shooting_notes": [
+    "Shoot in 16:9 and keep essential faces and props inside the central 9:16 area.",
+    "Do not use a fixed title overlay.",
+    "Do not place required readable text inside the drawings."
+  ],
+  "include_cover": true,
+  "include_framing_guide": true,
+  "cuts_per_page": 4,
+  "html_lang": "en",
+  "cuts": [
+    {
+      "number": 1,
+      "start": "00:00",
+      "end": "00:03",
+      "duration": "3 sec",
+      "scene": "Opening statement",
+      "shot": "Close-up",
+      "action": "The presenter leans slightly toward the group and delivers the opening line.",
+      "vertical_crop": "Keep the presenter's eyes and mouth inside the central area.",
+      "dialogue": "Presenter: We are ready to begin.",
+      "sound": "Low tension music begins.",
+      "image": "sample-storyboard_assets/cut-01.png"
+    },
+    {
+      "number": 2,
+      "start": "00:03",
+      "end": "00:06",
+      "duration": "3 sec",
+      "scene": "Exchanged glance",
+      "shot": "Two-shot reaction",
+      "action": "Participant A and Participant B exchange a silent glance while Participant A reaches toward a blank prop.",
+      "vertical_crop": "Keep both faces and the reaching hand inside the central area.",
+      "dialogue": "None.",
+      "sound": "Soft room ambience.",
+      "image": "sample-storyboard_assets/cut-02.png"
+    },
+    {
+      "number": 3,
+      "start": "00:06",
+      "end": "00:09",
+      "duration": "3 sec",
+      "scene": "Interruption",
+      "shot": "Medium shot",
+      "action": "Participant A rises halfway and extends one open palm, stopping the group's movement.",
+      "vertical_crop": "Keep Participant A's face and extended hand between the crop guides.",
+      "dialogue": "Participant A: Wait.",
+      "sound": "Music cuts abruptly.",
+      "image": "sample-storyboard_assets/cut-03.png"
+    },
+    {
+      "number": 4,
+      "start": "00:09",
+      "end": "00:12",
+      "duration": "3 sec",
+      "scene": "Board reveal",
+      "shot": "Wide shot",
+      "action": "The presenter raises a blank presentation board as the participants stop and turn toward it.",
+      "vertical_crop": "Keep the presenter, board, Participant A, and primary reactions near the center.",
+      "dialogue": "None.",
+      "sound": "A quiet reveal hit, then silence.",
+      "image": "sample-storyboard_assets/cut-04.png"
+    }
+  ]
+}
