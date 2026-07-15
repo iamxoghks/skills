@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
@@ -6,7 +6,11 @@ import { HtmlRenderer } from "../dist/core/html-renderer.js";
 import { getPrinterLocaleWarning } from "../dist/utils/printer-warning.js";
 
 const cli = ["node", "bin/codex-receipts.js"];
+const packageJson = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf-8"),
+);
 
+runCli(["--version"], packageJson.version);
 runCli(["--help"], "Usage: codex-receipts");
 runCli(["generate", "--help"], "Generate a receipt for a Codex session");
 testHtmlEscaping();

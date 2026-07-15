@@ -6,6 +6,9 @@ Codex 작업 세션을 영수증처럼 요약해 주는 작은 CLI/MCP 도구입
 
 [English README](./README.md)
 
+[![npm 버전](https://img.shields.io/npm/v/codex-receipts)](https://www.npmjs.com/package/codex-receipts)
+[![skills.sh 설치 수](https://skills.sh/b/iamxoghks/codex-receipts)](https://skills.sh/iamxoghks/codex-receipts/codex-receipts)
+
 ## 출력 내용
 
 - 세션 id, 위치, 시간
@@ -14,7 +17,28 @@ Codex 작업 세션을 영수증처럼 요약해 주는 작은 CLI/MCP 도구입
 - Codex 세션 로그에 기록된 토큰 사용량
 - 실제 과금액이 아닌 장난스러운 `pts` 합계
 
-`pts`는 재미용 점수입니다. API 과금액이나 실제 비용이 아닙니다.
+영수증에는 프롬프트나 응답 원문이 표시되지 않습니다. `pts`는 재미용
+점수이며 API 과금액이나 실제 비용이 아닙니다.
+
+## Codex 스킬로 설치
+
+Codex 대화창에 다음 명령을 입력합니다.
+
+```text
+$skill-installer install https://github.com/iamxoghks/codex-receipts/tree/main/skills/codex-receipts
+```
+
+Agent Skills CLI를 사용해 Codex 전역 스킬로 설치할 수도 있습니다.
+
+```bash
+npx skills add iamxoghks/codex-receipts \
+  --skill codex-receipts \
+  --global \
+  --agent codex \
+  --yes
+```
+
+설치 후 Codex를 다시 시작하면 `$codex-receipts`를 사용할 수 있습니다.
 
 ## npm으로 실행
 

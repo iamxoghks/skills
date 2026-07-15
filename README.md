@@ -4,17 +4,41 @@ Receipt-style summaries for Codex work sessions.
 
 [한국어 README](./README.ko.md)
 
+[![npm version](https://img.shields.io/npm/v/codex-receipts)](https://www.npmjs.com/package/codex-receipts)
+[![skills.sh installs](https://skills.sh/b/iamxoghks/codex-receipts)](https://skills.sh/iamxoghks/codex-receipts/codex-receipts)
+
 This fork turns the original [`claude-receipts`](https://github.com/chrishutchinson/claude-receipts) idea into a Codex-native toy: it reads local Codex session logs, counts the visible work trail, and prints a tiny "proof of work" receipt for the latest session.
 
 ## What It Prints
 
 - session id, location, and timestamp
-- user prompts and assistant replies
-- tool calls, tool outputs, and reasoning items
+- counts of user prompts and assistant replies
+- counts of tool calls, tool outputs, and reasoning items
 - token usage when Codex recorded it in the session log
 - a made-up `pts` total instead of billing cost
 
-The points are intentionally playful. They are not API billing numbers.
+The receipt does not reproduce prompt or reply bodies. The points are
+intentionally playful and are not API billing numbers.
+
+## Install As A Codex Skill
+
+Enter this command in a Codex conversation:
+
+```text
+$skill-installer install https://github.com/iamxoghks/codex-receipts/tree/main/skills/codex-receipts
+```
+
+Or install it globally for Codex with the Agent Skills CLI:
+
+```bash
+npx skills add iamxoghks/codex-receipts \
+  --skill codex-receipts \
+  --global \
+  --agent codex \
+  --yes
+```
+
+Restart Codex after installation, then invoke it with `$codex-receipts`.
 
 ## Install From npm
 

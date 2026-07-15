@@ -1,8 +1,12 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { createRequire } from "module";
 import { z } from "zod";
 import { DataFetcher } from "../core/data-fetcher.js";
 import { ReceiptService } from "../core/receipt-service.js";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("../../package.json") as { version: string };
 
 export class McpCommand {
   async execute(): Promise<void> {
@@ -10,7 +14,7 @@ export class McpCommand {
     const receiptService = new ReceiptService();
     const server = new McpServer({
       name: "codex-receipts",
-      version: "1.2.0",
+      version: packageJson.version,
     });
 
     server.registerTool(

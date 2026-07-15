@@ -128,12 +128,15 @@ Override receipt location:
 npx codex-receipts generate --location "Cheonan, KR"
 ```
 
-## Privacy Notes
+## Privacy And Side Effects
 
 - Codex Receipts reads local Codex logs from `~/.codex/session_index.jsonl` and `~/.codex/sessions/**/*.jsonl`.
 - It writes generated receipts under `~/.codex-receipts`.
-- Receipt generation does not send session contents or public IP information to a remote service.
-- Receipts include visible session activity such as prompts, assistant replies, tool calls, and token usage if Codex logged it.
+- The CLI reads the local logs to calculate activity counts, but generated receipts do not reproduce prompt or assistant-reply bodies.
+- Receipt generation does not upload session contents or public IP information. `npx` may contact the npm registry to download the package itself.
+- The MCP `list_codex_sessions` tool returns local session paths and thread names to the connected local MCP client. Use it only when the user asks to list or search sessions.
+- Generated receipts contain a session identifier or slug, activity counts, token totals when available, and user-supplied receipt text.
+- TCP printer output opens an outbound connection to the user-supplied printer address. Use printer output only when the user explicitly requests it.
 
 ## Agent Workflow
 
