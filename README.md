@@ -40,6 +40,13 @@ npx skills add iamxoghks/codex-receipts \
 
 Restart Codex after installation, then invoke it with `$codex-receipts`.
 
+The skill does not download packages at runtime. Install its matching CLI
+version once before invoking the skill:
+
+```bash
+npm install --global codex-receipts@1.2.10
+```
+
 ## Install From npm
 
 ```bash

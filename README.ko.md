@@ -40,6 +40,13 @@ npx skills add iamxoghks/codex-receipts \
 
 설치 후 Codex를 다시 시작하면 `$codex-receipts`를 사용할 수 있습니다.
 
+스킬은 실행 중 패키지를 자동으로 내려받지 않습니다. 스킬을 사용하기 전에
+일치하는 CLI 버전을 한 번 설치합니다.
+
+```bash
+npm install --global codex-receipts@1.2.10
+```
+
 ## npm으로 실행
 
 ```bash
