@@ -1,0 +1,10 @@
+node_modules/
+dist/
+receipts/
+*.jpeg
+*.jpg
+*.png
+*.log
+.DS_Store
+.env
+*.tsbuildinfo
