@@ -13,7 +13,6 @@ const packageJson = JSON.parse(
 runCli(["--version"], packageJson.version);
 runCli(["--help"], "Usage: codex-receipts");
 runCli(["generate", "--help"], "Generate a receipt for a Codex session");
-testSkillRuntimePolicy();
 testHtmlEscaping();
 testPrinterLocaleWarning();
 
@@ -44,30 +43,6 @@ function runCli(args, expectedText) {
     throw new Error(
       `Expected output to include "${expectedText}" for ${args.join(" ")}`,
     );
-  }
-}
-
-function testSkillRuntimePolicy() {
-  const skill = readFileSync(
-    new URL("../skills/codex-receipts/SKILL.md", import.meta.url),
-    "utf-8",
-  );
-  const expectedVersion = skill.match(
-    /This skill release expects\s+`codex-receipts` version `(\d+\.\d+\.\d+)`\./,
-  )?.[1];
-
-  if (expectedVersion !== packageJson.version) {
-    throw new Error(
-      `Skill expects ${expectedVersion ?? "no version"}, package is ${packageJson.version}.`,
-    );
-  }
-
-  if (/\bnpx\s+codex-receipts\b/.test(skill)) {
-    throw new Error("Skill must not download and execute codex-receipts with npx.");
-  }
-
-  if (!/Do not download,\s+install, or update the CLI automatically\./.test(skill)) {
-    throw new Error("Skill is missing its runtime dependency guardrail.");
   }
 }
 

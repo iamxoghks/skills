@@ -5,7 +5,7 @@ Receipt-style summaries for Codex work sessions.
 [한국어 README](./README.ko.md)
 
 [![npm version](https://img.shields.io/npm/v/codex-receipts)](https://www.npmjs.com/package/codex-receipts)
-[![skills.sh installs](https://skills.sh/b/iamxoghks/codex-receipts)](https://skills.sh/iamxoghks/codex-receipts/codex-receipts)
+[![skills.sh installs](https://skills.sh/b/iamxoghks/skills/codex-receipts)](https://skills.sh/iamxoghks/skills/codex-receipts)
 
 This fork turns the original [`claude-receipts`](https://github.com/chrishutchinson/claude-receipts) idea into a Codex-native toy: it reads local Codex session logs, counts the visible work trail, and prints a tiny "proof of work" receipt for the latest session.
 
@@ -25,13 +25,13 @@ intentionally playful and are not API billing numbers.
 Enter this command in a Codex conversation:
 
 ```text
-$skill-installer install https://github.com/iamxoghks/codex-receipts/tree/main/skills/codex-receipts
+$skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts
 ```
 
 Or install it globally for Codex with the Agent Skills CLI:
 
 ```bash
-npx skills add iamxoghks/codex-receipts \
+npx skills add iamxoghks/skills \
   --skill codex-receipts \
   --global \
   --agent codex \
@@ -255,9 +255,9 @@ alongside printer output.
 
 ## Codex Skill
 
-This repo includes a Codex skill at `skills/codex-receipts`. The skill tells
-agents to use the published npm CLI for latest or specific session receipts,
-console/HTML/printer outputs, and local-only privacy expectations.
+The companion Codex skill is maintained in the public
+[`iamxoghks/skills`](https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts)
+catalog. This repository remains the source for the npm CLI and MCP server.
 
 ## Release
 
@@ -271,7 +271,8 @@ git push origin main --tags
 
 The `Publish to npm` workflow runs only for tags matching `v*`, runs `npm test`,
 and publishes the package to npm. Use `minor` or `major` instead of `patch` when
-the release scope requires it.
+the release scope requires it. After publishing a new CLI version, update the
+pinned version in the catalog skill separately.
 
 ## Notes
 

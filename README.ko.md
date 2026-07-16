@@ -7,7 +7,7 @@ Codex 작업 세션을 영수증처럼 요약해 주는 작은 CLI/MCP 도구입
 [English README](./README.md)
 
 [![npm 버전](https://img.shields.io/npm/v/codex-receipts)](https://www.npmjs.com/package/codex-receipts)
-[![skills.sh 설치 수](https://skills.sh/b/iamxoghks/codex-receipts)](https://skills.sh/iamxoghks/codex-receipts/codex-receipts)
+[![skills.sh 설치 수](https://skills.sh/b/iamxoghks/skills/codex-receipts)](https://skills.sh/iamxoghks/skills/codex-receipts)
 
 ## 출력 내용
 
@@ -25,13 +25,13 @@ Codex 작업 세션을 영수증처럼 요약해 주는 작은 CLI/MCP 도구입
 Codex 대화창에 다음 명령을 입력합니다.
 
 ```text
-$skill-installer install https://github.com/iamxoghks/codex-receipts/tree/main/skills/codex-receipts
+$skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts
 ```
 
 Agent Skills CLI를 사용해 Codex 전역 스킬로 설치할 수도 있습니다.
 
 ```bash
-npx skills add iamxoghks/codex-receipts \
+npx skills add iamxoghks/skills \
   --skill codex-receipts \
   --global \
   --agent codex \
@@ -233,7 +233,9 @@ Codex Receipts가 읽는 파일:
 
 ## Codex Skill
 
-이 repo에는 `skills/codex-receipts` Codex skill이 포함되어 있습니다. 이 skill은 에이전트가 npm CLI를 사용해 최신 또는 특정 세션 영수증을 만들고, console/HTML/printer 출력과 로컬 전용 privacy 기대치를 지키도록 안내합니다.
+함께 사용하는 Codex skill은 공개
+[`iamxoghks/skills`](https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts)
+카탈로그에서 관리합니다. 이 저장소는 npm CLI와 MCP server의 소스로 유지합니다.
 
 ## 릴리스
 
@@ -244,7 +246,7 @@ npm version patch
 git push origin main --tags
 ```
 
-`Publish to npm` workflow는 `v*` 태그에서만 실행되고, `npm test` 후 npm에 publish합니다. 변경 범위가 크면 `patch` 대신 `minor` 또는 `major`를 사용하세요.
+`Publish to npm` workflow는 `v*` 태그에서만 실행되고, `npm test` 후 npm에 publish합니다. 변경 범위가 크면 `patch` 대신 `minor` 또는 `major`를 사용하세요. 새 CLI 버전을 배포한 뒤에는 카탈로그 skill에 고정된 버전도 별도로 갱신해야 합니다.
 
 ## 참고
 
