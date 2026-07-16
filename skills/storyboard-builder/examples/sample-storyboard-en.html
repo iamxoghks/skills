@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Sample Promotional Video Storyboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    @page { size: A4 portrait; margin: 9mm; }
+    body {
+      margin: 0;
+      background: #e9e9e7;
+      color: #111;
+      font-family: "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+    }
+    main { max-width: 1120px; margin: 0 auto; padding: 28px 18px 56px; }
+    .cover { background: #fff; border: 1.5px solid #222; padding: 18px 22px; margin-bottom: 22px; }
+    h1 { margin: 0 0 10px; font-size: 28px; letter-spacing: 0; }
+    .cover p { margin: 5px 0; font-size: 14px; line-height: 1.55; }
+    .framing-guide { margin-top: 22px; padding-top: 16px; border-top: 1.5px solid #777; }
+    .framing-guide h2 { margin: 0 0 12px; font-size: 17px; letter-spacing: 0; }
+    .guide-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(190px, 1fr); gap: 16px; align-items: start; }
+    .guide-frame { width: 100%; aspect-ratio: 16 / 9; border: 4px solid #111; overflow: hidden; background: #fff; }
+    .guide-frame img { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; }
+    .guide-legend { display: grid; gap: 10px; font-size: 11px; line-height: 1.42; word-break: keep-all; }
+    .guide-item { display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: start; }
+    .guide-key { width: 24px; height: 14px; margin-top: 2px; display: block; }
+    .guide-key-frame { border-top: 4px solid #111; }
+    .guide-key-safe { border-top: 3px dashed #72a9d2; }
+    .guide-key-sides { border: 1px solid #999; background: #e7e7e7; }
+    .guide-key-subject { border-left: 5px solid #111; border-right: 5px solid #111; }
+    .page { background: #fff; border: 1.5px solid #222; margin: 0 0 28px; break-after: page; }
+    .page-head { display: grid; grid-template-columns: 1fr auto; border-bottom: 1.5px solid #222; font-size: 13px; }
+    .page-head div { padding: 6px 8px; }
+    .page-title { font-weight: 700; }
+    .page-no { min-width: 76px; border-left: 1.5px solid #222; text-align: center; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { border-right: 1.5px solid #222; border-bottom: 1.5px solid #222; vertical-align: top; }
+    th:last-child, td:last-child { border-right: 0; }
+    tbody tr:last-child td { border-bottom: 0; }
+    th { padding: 6px; text-align: center; font-size: 15px; font-weight: 800; background: #fafafa; }
+    .cut-col { width: 6.5%; }
+    .pic-col { width: 39%; }
+    .cap-col { width: 47%; }
+    .dur-col { width: 7.5%; }
+    .cut-cell { padding: 8px 4px; text-align: center; font-size: 15px; font-weight: 800; }
+    .timecode { display: block; margin-top: 8px; font-size: 11px; font-weight: 500; line-height: 1.35; }
+    .picture { padding: 7px; background: #fff; vertical-align: middle; }
+    .picture-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 3px solid #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+    }
+    .picture-frame img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; background: #fff; }
+    .caption { padding: 0; font-size: 11px; line-height: 1.42; }
+    .caption-grid { display: grid; grid-template-columns: 1.42fr 1fr 0.68fr; min-height: 214px; height: 100%; }
+    .caption-block { padding: 7px 8px; border-right: 1px solid #999; overflow-wrap: anywhere; }
+    .caption-block:last-child { border-right: 0; }
+    .caption-label { display: block; margin-bottom: 5px; font-size: 10px; font-weight: 800; }
+    .caption-text { white-space: pre-line; }
+    .duration { padding: 8px 3px; text-align: center; font-size: 12px; font-weight: 700; }
+    @media print {
+      html, body { background: #fff; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { max-width: none; padding: 0; }
+      .cover {
+        width: 192mm;
+        max-width: 192mm;
+        min-height: 279mm;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        break-after: page;
+        page-break-after: always;
+      }
+      .framing-guide { margin-top: 16px; padding-top: 12px; }
+      .framing-guide h2 { margin-bottom: 9px; font-size: 14px; }
+      .guide-grid { grid-template-columns: minmax(0, 1.5fr) minmax(160px, 1fr); gap: 12px; }
+      .guide-legend { gap: 7px; font-size: 8.5px; line-height: 1.35; }
+      .guide-item { grid-template-columns: 24px 1fr; gap: 6px; }
+      .guide-key { width: 20px; height: 11px; }
+      .page {
+        width: 192mm;
+        max-width: 192mm;
+        margin: 0;
+        border-width: 1px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        break-after: page;
+        page-break-after: always;
+      }
+      .page:last-child { break-after: auto; page-break-after: auto; }
+      thead { display: table-header-group; }
+      tbody tr { break-inside: avoid; page-break-inside: avoid; }
+      .cut-col { width: 6%; }
+      .pic-col { width: 46%; }
+      .cap-col { width: 40%; }
+      .dur-col { width: 8%; }
+      .picture { padding: 5px; }
+      .caption { font-size: 8.5px; line-height: 1.3; }
+      .caption-grid { min-height: 0; grid-template-columns: 1.55fr 0.95fr 0.65fr; }
+      .caption-text { word-break: keep-all; overflow-wrap: normal; }
+      .caption-block { padding: 5px 6px; }
+      .caption-label { font-size: 8px; }
+      .cut-cell, th { font-size: 10px; }
+      .timecode, .duration { font-size: 8px; }
+    }
+    @media (max-width: 760px) {
+      main { padding: 14px 8px 36px; }
+      .guide-grid { grid-template-columns: 1fr; }
+      .page { overflow-x: auto; }
+      table { min-width: 1040px; }
+    }
+  </style>
+</head>
+<body>
+<main data-storyboard-pages="2">
+
+  <section class="cover" data-storyboard-cover>
+    <h1>Sample Promotional Video Storyboard</h1>
+    <p>Format: Short narrative shooting board, 4Cut, 12 sec</p><p>Cast: Presenter, Participant A, Participant B, Participants</p><p>Shooting Notes: Shoot in 16:9 and keep essential faces and props inside the central 9:16 area.</p><p>Shooting Notes: Do not use a fixed title overlay.</p><p>Shooting Notes: Do not place required readable text inside the drawings.</p>
+    <section class="framing-guide" aria-label="Framing Guide">
+      <h2>Framing Guide</h2>
+      <div class="guide-grid">
+        <div class="guide-frame"><img src="sample-storyboard_assets/cut-01.png" alt="Framing Guide"></div>
+        <div class="guide-legend"><div class="guide-item"><span class="guide-key guide-key-frame" aria-hidden="true"></span><span>Black outer border: the complete 16:9 landscape frame.</span></div><div class="guide-item"><span class="guide-key guide-key-safe" aria-hidden="true"></span><span>Blue vertical dashed lines: the central 9:16 safe area retained in a vertical crop.</span></div><div class="guide-item"><span class="guide-key guide-key-sides" aria-hidden="true"></span><span>Areas outside the dashed lines: visible in landscape but may be removed in a vertical export.</span></div><div class="guide-item"><span class="guide-key guide-key-subject" aria-hidden="true"></span><span>Keep essential faces, gestures, and props between the blue dashed lines.</span></div></div>
+      </div>
+    </section>
+  </section>
+  <section class="page" data-storyboard-page data-page-label="Page">
+    <div class="page-head"><div class="page-title">Sample Promotional Video Storyboard</div><div class="page-no">1 Page</div></div>
+    <table>
+      <thead><tr><th class="cut-col">Cut</th><th class="pic-col">Picture</th><th class="cap-col">Description</th><th class="dur-col">Duration</th></tr></thead>
+      <tbody>
+        <tr data-cut-number="1">
+          <td class="cut-cell">1<span class="timecode">00:00<br>00:03</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-01.png" alt="Cut 1 Picture"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">Action Notes</span>
+        <div class="caption-text">Scene: Opening statement
+Shot: Close-up
+Action: The presenter leans slightly toward the group and delivers the opening line.
+Vertical Crop: Keep the presenter&#x27;s eyes and mouth inside the central area.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Dialogue</span>
+        <div class="caption-text">Presenter: We are ready to begin.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Sound</span>
+        <div class="caption-text">Low tension music begins.</div>
+      </div>
+    </div></td>
+          <td class="duration">3 sec</td>
+        </tr>
+        <tr data-cut-number="2">
+          <td class="cut-cell">2<span class="timecode">00:03<br>00:06</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-02.png" alt="Cut 2 Picture"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">Action Notes</span>
+        <div class="caption-text">Scene: Exchanged glance
+Shot: Two-shot reaction
+Action: Participant A and Participant B exchange a silent glance while Participant A reaches toward a blank prop.
+Vertical Crop: Keep both faces and the reaching hand inside the central area.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Dialogue</span>
+        <div class="caption-text">None.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Sound</span>
+        <div class="caption-text">Soft room ambience.</div>
+      </div>
+    </div></td>
+          <td class="duration">3 sec</td>
+        </tr>
+        <tr data-cut-number="3">
+          <td class="cut-cell">3<span class="timecode">00:06<br>00:09</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-03.png" alt="Cut 3 Picture"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">Action Notes</span>
+        <div class="caption-text">Scene: Interruption
+Shot: Medium shot
+Action: Participant A rises halfway and extends one open palm, stopping the group&#x27;s movement.
+Vertical Crop: Keep Participant A&#x27;s face and extended hand between the crop guides.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Dialogue</span>
+        <div class="caption-text">Participant A: Wait.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Sound</span>
+        <div class="caption-text">Music cuts abruptly.</div>
+      </div>
+    </div></td>
+          <td class="duration">3 sec</td>
+        </tr>
+        <tr data-cut-number="4">
+          <td class="cut-cell">4<span class="timecode">00:09<br>00:12</span></td>
+          <td class="picture"><div class="picture-frame"><img src="sample-storyboard_assets/cut-04.png" alt="Cut 4 Picture"></div></td>
+          <td class="caption">
+    <div class="caption-grid">
+      <div class="caption-block">
+        <span class="caption-label">Action Notes</span>
+        <div class="caption-text">Scene: Board reveal
+Shot: Wide shot
+Action: The presenter raises a blank presentation board as the participants stop and turn toward it.
+Vertical Crop: Keep the presenter, board, Participant A, and primary reactions near the center.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Dialogue</span>
+        <div class="caption-text">None.</div>
+      </div>
+      <div class="caption-block">
+        <span class="caption-label">Sound</span>
+        <div class="caption-text">A quiet reveal hit, then silence.</div>
+      </div>
+    </div></td>
+          <td class="duration">3 sec</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>

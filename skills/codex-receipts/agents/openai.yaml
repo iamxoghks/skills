@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Receipts"
+  short_description: "Generate local receipt-style summaries for Codex sessions"
+  default_prompt: "Generate a Codex session receipt with codex-receipts, choosing latest or specific session and console, HTML, or printer output as needed."

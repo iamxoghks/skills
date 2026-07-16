@@ -1,0 +1,74 @@
+{
+  "title": "홍보 영상 스토리보드 예시",
+  "format": "단편 서사형 촬영 콘티",
+  "estimated_duration": "12초",
+  "cast": [
+    "진행자",
+    "참가자 가",
+    "참가자 나",
+    "참가자들"
+  ],
+  "shooting_notes": [
+    "16:9로 촬영하되 주요 얼굴과 소품은 중앙 9:16 영역 안에 배치한다.",
+    "상단 고정 제목은 사용하지 않는다.",
+    "그림 안에는 반드시 읽혀야 하는 문구를 넣지 않는다."
+  ],
+  "include_cover": true,
+  "include_framing_guide": true,
+  "cuts_per_page": 4,
+  "html_lang": "ko",
+  "cuts": [
+    {
+      "number": 1,
+      "start": "00:00",
+      "end": "00:03",
+      "duration": "3초",
+      "scene": "도입 대사",
+      "shot": "인물 근접 화면",
+      "action": "진행자가 모임을 향해 상체를 살짝 기울이며 첫 대사를 건넨다.",
+      "vertical_crop": "진행자의 눈과 입이 중앙 세로 영역 안에 들어오도록 한다.",
+      "dialogue": "진행자: 이제 시작할 준비가 됐습니다.",
+      "sound": "낮게 긴장감을 주는 음악이 시작된다.",
+      "image": "sample-storyboard_assets/cut-01.png"
+    },
+    {
+      "number": 2,
+      "start": "00:03",
+      "end": "00:06",
+      "duration": "3초",
+      "scene": "눈빛 교환",
+      "shot": "두 사람 반응 화면",
+      "action": "참가자 가와 참가자 나가 말없이 서로 눈치를 본다. 참가자 가는 빈 소품 쪽으로 손을 뻗는다.",
+      "vertical_crop": "두 사람의 얼굴과 뻗은 손이 중앙 영역 안에 들어오도록 한다.",
+      "dialogue": "대사 없음.",
+      "sound": "잔잔한 실내 배경음이 이어진다.",
+      "image": "sample-storyboard_assets/cut-02.png"
+    },
+    {
+      "number": 3,
+      "start": "00:06",
+      "end": "00:09",
+      "duration": "3초",
+      "scene": "움직임 제지",
+      "shot": "중간 거리 화면",
+      "action": "참가자 가가 자리에서 반쯤 일어나 한쪽 손바닥을 내밀며 모두의 움직임을 멈춘다.",
+      "vertical_crop": "참가자 가의 얼굴과 내민 손을 세로 자르기 안내선 사이에 둔다.",
+      "dialogue": "참가자 가: 잠깐만요.",
+      "sound": "음악이 갑자기 끊긴다.",
+      "image": "sample-storyboard_assets/cut-03.png"
+    },
+    {
+      "number": 4,
+      "start": "00:09",
+      "end": "00:12",
+      "duration": "3초",
+      "scene": "안내판 공개",
+      "shot": "넓은 화면",
+      "action": "진행자가 빈 안내판을 들어 올리자 참가자들이 움직임을 멈추고 안내판을 바라본다.",
+      "vertical_crop": "진행자와 안내판, 참가자 가와 주요 반응 인물을 화면 중앙 가까이에 둔다.",
+      "dialogue": "대사 없음.",
+      "sound": "짧은 강조음 뒤에 정적이 흐른다.",
+      "image": "sample-storyboard_assets/cut-04.png"
+    }
+  ]
+}

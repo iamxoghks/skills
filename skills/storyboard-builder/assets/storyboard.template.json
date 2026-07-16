@@ -1,0 +1,45 @@
+{
+  "title": "프로젝트 스토리보드",
+  "format": "서사형 촬영 콘티",
+  "estimated_duration": "8초",
+  "cast": [
+    "진행자",
+    "참가자"
+  ],
+  "shooting_notes": [
+    "16:9로 촬영하되 주요 얼굴과 소품은 중앙 9:16 영역 안에 배치한다.",
+    "그림 안에는 반드시 읽혀야 하는 문구를 넣지 않는다."
+  ],
+  "include_cover": true,
+  "include_framing_guide": true,
+  "cuts_per_page": 4,
+  "html_lang": "ko",
+  "cuts": [
+    {
+      "number": 1,
+      "start": "00:00",
+      "end": "00:04",
+      "duration": "4초",
+      "scene": "도입 장면",
+      "shot": "중간 거리 화면",
+      "action": "말하는 사람과 듣는 사람, 배경 인물의 행동, 몸짓과 소품 움직임을 적는다.",
+      "vertical_crop": "중앙 9:16 영역 안에 남아야 하는 인물과 소품을 적는다.",
+      "dialogue": "진행자: 이 대사를 교체하세요.",
+      "sound": "음악과 배경음, 효과음을 적는다.",
+      "image": "images/cut-01.png"
+    },
+    {
+      "number": 2,
+      "start": "00:04",
+      "end": "00:08",
+      "duration": "4초",
+      "scene": "반응 장면",
+      "shot": "인물 근접 화면",
+      "action": "말없는 눈빛, 망설임, 제지 또는 반응 행동을 적는다.",
+      "vertical_crop": "주요 얼굴과 몸짓이 중앙 영역 안에 들어오도록 한다.",
+      "dialogue": "대사 없음.",
+      "sound": "장면 전환음 또는 공간 배경음을 적는다.",
+      "image": "images/cut-02.png"
+    }
+  ]
+}
