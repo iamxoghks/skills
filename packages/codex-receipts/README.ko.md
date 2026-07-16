@@ -44,7 +44,7 @@ npx skills add iamxoghks/skills \
 일치하는 CLI 버전을 한 번 설치합니다.
 
 ```bash
-npm install --global codex-receipts@1.2.10
+npm install --global codex-receipts@1.2.11
 ```
 
 ## npm으로 실행

@@ -58,7 +58,7 @@ PDF rendering.
 Install the pinned CLI separately:
 
 ```bash
-npm install --global codex-receipts@1.2.10
+npm install --global codex-receipts@1.2.11
 ```
 
 The CLI and MCP server source lives in

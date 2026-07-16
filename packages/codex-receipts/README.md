@@ -44,7 +44,7 @@ The skill does not download packages at runtime. Install its matching CLI
 version once before invoking the skill:
 
 ```bash
-npm install --global codex-receipts@1.2.10
+npm install --global codex-receipts@1.2.11
 ```
 
 ## Install From npm

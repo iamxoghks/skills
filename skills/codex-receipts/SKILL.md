@@ -20,7 +20,7 @@ Generate receipt-style summaries from local Codex session logs using the publish
 ## Required Tool
 
 Use the already-installed published CLI. This skill release expects
-`codex-receipts` version `1.2.10`.
+`codex-receipts` version `1.2.11`.
 
 Before running a receipt command, verify the executable and version:
 
@@ -30,7 +30,7 @@ codex-receipts --version
 ```
 
 If the executable is missing or the version differs, stop and tell the user
-that `codex-receipts@1.2.10` must be installed separately. Do not download,
+that `codex-receipts@1.2.11` must be installed separately. Do not download,
 install, or update the CLI automatically. Wait until the user confirms the
 required version is installed before continuing.
 

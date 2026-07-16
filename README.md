@@ -69,7 +69,7 @@ $skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/co
 고정 버전 CLI를 설치해야 합니다.
 
 ```bash
-npm install --global codex-receipts@1.2.10
+npm install --global codex-receipts@1.2.11
 ```
 
 CLI와 MCP 서버 소스는
