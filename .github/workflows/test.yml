@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  skills:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
 
       - name: Install system dependencies
         run: |
@@ -44,3 +44,31 @@ jobs:
 
       - name: Run end-to-end smoke test
         run: python tests/smoke_test.py
+
+  codex-receipts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: packages/codex-receipts
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: packages/codex-receipts/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+
+      - name: Test package
+        run: npm test
+
+      - name: Verify package contents
+        run: npm pack --dry-run

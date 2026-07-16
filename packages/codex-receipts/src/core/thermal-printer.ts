@@ -11,7 +11,7 @@ const execFileAsync = promisify(execFile);
 const WIDTH = 40; // TM-T88V 80mm paper, Font A minus margin
 const LEFT_MARGIN_DOTS = 12; // 1 character width at 203 dpi
 
-const REPO_URL = "https://github.com/iamxoghks/codex-receipts";
+const REPO_URL = "https://github.com/iamxoghks/skills/tree/main/packages/codex-receipts";
 
 // Epson USB vendor ID
 const EPSON_VENDOR_ID = 0x04b8;

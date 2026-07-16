@@ -1,6 +1,7 @@
-# Codex Receipts Project Notes
+# Codex Receipts Package Notes
 
-This repo is a Codex-oriented fork of the original receipt generator.
+This directory contains the npm CLI and MCP server for the Codex Receipts skill.
+The repository root contains the public skill catalog and shared CI.
 
 ## Commands
 
@@ -25,10 +26,15 @@ Codex Receipts does not calculate real spend. It generates playful `pts` from pr
 
 Do not reintroduce external usage CLIs, non-Codex hook behavior, or writes outside Codex Receipts config/output paths. This fork should stay Codex-native.
 
-## Skill Distribution
+## Skill Integration
 
-The public agent skill is maintained separately at
-`https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts`.
-Do not add a discoverable `SKILL.md` back to this npm project. After publishing
-a new package version, update the pinned CLI version in the catalog skill and
-run the catalog validation before announcing the release.
+The public agent skill is maintained at `../../skills/codex-receipts`. Do not
+add a discoverable `SKILL.md` to this package directory. After publishing a new
+package version, update the pinned CLI version in the catalog skill and run all
+root-level catalog and package validation before announcing the release.
+
+## Release
+
+Publish only through the root workflow
+`.github/workflows/publish-codex-receipts.yml`. Release tags use
+`codex-receipts-v<version>` and must match this package's version.

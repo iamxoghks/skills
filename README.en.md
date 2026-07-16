@@ -4,8 +4,9 @@
 
 A public collection of reusable skills for Codex and other Agent Skills
 compatible agents. Each skill is packaged independently under
-`skills/<name>/SKILL.md`, and this repository is the canonical distribution
-source.
+`skills/<name>/SKILL.md`, with related runtime packages under
+`packages/<name>`. This repository is the canonical distribution and source
+repository for both.
 
 ## Included Skills
 
@@ -60,8 +61,8 @@ Install the pinned CLI separately:
 npm install --global codex-receipts@1.2.10
 ```
 
-The CLI source and npm releases remain in
-[`iamxoghks/codex-receipts`](https://github.com/iamxoghks/codex-receipts).
+The CLI and MCP server source lives in
+[`packages/codex-receipts`](packages/codex-receipts).
 
 ## Validate
 
@@ -72,6 +73,15 @@ PYTHONDONTWRITEBYTECODE=1 python3 tests/smoke_test.py
 
 The smoke test requires FFmpeg, Playwright, and Chromium. GitHub Actions runs
 the same validation.
+
+Validate the Codex Receipts package:
+
+```bash
+npm --prefix packages/codex-receipts ci
+npm --prefix packages/codex-receipts audit --omit=dev
+npm --prefix packages/codex-receipts test
+npm --prefix packages/codex-receipts pack --dry-run
+```
 
 ## Security
 

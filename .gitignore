@@ -4,5 +4,6 @@ __pycache__/
 .pytest_cache/
 .playwright-cli/
 node_modules/
+dist/
 outputs/
 work/

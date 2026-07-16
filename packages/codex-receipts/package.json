@@ -6,12 +6,13 @@
   "author": "iamxoghks",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamxoghks/codex-receipts.git"
+    "url": "git+https://github.com/iamxoghks/skills.git",
+    "directory": "packages/codex-receipts"
   },
   "bugs": {
-    "url": "https://github.com/iamxoghks/codex-receipts/issues"
+    "url": "https://github.com/iamxoghks/skills/issues"
   },
-  "homepage": "https://github.com/iamxoghks/codex-receipts#readme",
+  "homepage": "https://github.com/iamxoghks/skills/tree/main/packages/codex-receipts#readme",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

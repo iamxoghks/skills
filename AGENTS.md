@@ -5,7 +5,9 @@
 - Publish every skill under `skills/<skill-name>/SKILL.md`.
 - Keep `name` in frontmatter identical to the folder name.
 - Treat this repository as the canonical public copy. Do not maintain a second discoverable copy in a product repository.
-- Keep runtime applications, npm packages, and unrelated project source in their own repositories.
+- Keep runtime packages that directly support a catalog skill under `packages/<package-name>`.
+- Keep unrelated applications and project source in their own repositories.
+- The `codex-receipts` skill is canonical under `skills/codex-receipts`; its npm CLI and MCP server are canonical under `packages/codex-receipts`.
 
 ## Public Safety
 
@@ -34,4 +36,20 @@ Confirm discovery after adding or renaming a skill:
 npx skills add . --list
 ```
 
+Run the Codex Receipts package checks when its package, skill, or release
+configuration changes:
+
+```bash
+npm --prefix packages/codex-receipts ci
+npm --prefix packages/codex-receipts audit --omit=dev
+npm --prefix packages/codex-receipts test
+npm --prefix packages/codex-receipts pack --dry-run
+```
+
 Update both language READMEs when installation commands, skill names, requirements, or catalog membership change.
+
+## Releases
+
+- Publish `codex-receipts` only through `.github/workflows/publish-codex-receipts.yml` and npm trusted publishing.
+- Use tags named `codex-receipts-v<version>` and verify that the tag version matches `packages/codex-receipts/package.json`.
+- After publishing, update the version pinned by `skills/codex-receipts` in the same repository.

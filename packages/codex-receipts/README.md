@@ -255,24 +255,30 @@ alongside printer output.
 
 ## Codex Skill
 
-The companion Codex skill is maintained in the public
+The companion Codex skill is maintained in this repository's public
 [`iamxoghks/skills`](https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts)
-catalog. This repository remains the source for the npm CLI and MCP server.
+catalog. This directory is the source for the npm CLI and MCP server.
 
 ## Release
 
-This package uses npm trusted publishing from GitHub Actions. To publish a new
-version, bump the package version and push the generated tag:
+This package uses npm trusted publishing from the repository's
+`publish-codex-receipts.yml` GitHub Actions workflow. From this directory, bump
+the package version without creating npm's default tag, then commit and push a
+namespaced release tag:
 
 ```bash
-npm version patch
-git push origin main --tags
+npm version patch --no-git-tag-version
+git add package.json package-lock.json
+git commit -m "Release codex-receipts vX.Y.Z"
+git tag codex-receipts-vX.Y.Z
+git push origin main codex-receipts-vX.Y.Z
 ```
 
-The `Publish to npm` workflow runs only for tags matching `v*`, runs `npm test`,
-and publishes the package to npm. Use `minor` or `major` instead of `patch` when
-the release scope requires it. After publishing a new CLI version, update the
-pinned version in the catalog skill separately.
+The workflow runs only for tags matching `codex-receipts-v*`, rejects a tag
+whose version differs from `package.json`, runs the audit and tests, and then
+publishes to npm. Use `minor` or `major` instead of `patch` when the release
+scope requires it. After publishing, update the version pinned by
+`skills/codex-receipts` in the same repository.
 
 ## Notes
 

@@ -3,8 +3,9 @@
 **한국어** | [English](README.en.md)
 
 Codex와 Agent Skills 호환 에이전트에서 사용할 수 있는 공개 스킬 모음입니다.
-각 스킬은 `skills/<이름>/SKILL.md`에 독립적으로 패키징되어 있으며, 이
-저장소가 배포 정본입니다.
+각 스킬은 `skills/<이름>/SKILL.md`에 독립적으로 패키징되어 있으며, 관련
+실행 패키지는 `packages/<이름>`에서 함께 관리합니다. 이 저장소가 스킬과
+패키지 소스의 배포 정본입니다.
 
 ## 포함된 스킬
 
@@ -71,9 +72,8 @@ $skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/co
 npm install --global codex-receipts@1.2.10
 ```
 
-CLI 소스와 npm 배포는
-[`iamxoghks/codex-receipts`](https://github.com/iamxoghks/codex-receipts)에서
-관리합니다.
+CLI와 MCP 서버 소스는
+[`packages/codex-receipts`](packages/codex-receipts)에서 관리합니다.
 
 ## 검증
 
@@ -90,6 +90,15 @@ PYTHONDONTWRITEBYTECODE=1 python3 tests/smoke_test.py
 ```
 
 GitHub Actions도 동일한 검사를 실행합니다.
+
+Codex Receipts 패키지 검사:
+
+```bash
+npm --prefix packages/codex-receipts ci
+npm --prefix packages/codex-receipts audit --omit=dev
+npm --prefix packages/codex-receipts test
+npm --prefix packages/codex-receipts pack --dry-run
+```
 
 ## 공개 및 보안 원칙
 

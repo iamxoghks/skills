@@ -287,7 +287,7 @@ export class HtmlRenderer {
         <div class="footer-message">${this.escapeHtml(textOptions.footerMessage)}</div>
         <div class="generated-by">
           ${this.escapeHtml(labels.generatedBy)} <strong>Codex receipts</strong><br>
-          <a href="https://github.com/iamxoghks/codex-receipts" style="color: #333;">github.com/iamxoghks/codex-receipts</a>
+          <a href="https://github.com/iamxoghks/skills/tree/main/packages/codex-receipts" style="color: #333;">github.com/iamxoghks/skills</a>
         </div>
       </div>
     </div>

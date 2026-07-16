@@ -233,20 +233,29 @@ Codex Receipts가 읽는 파일:
 
 ## Codex Skill
 
-함께 사용하는 Codex skill은 공개
+함께 사용하는 Codex skill은 이 저장소의 공개
 [`iamxoghks/skills`](https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts)
-카탈로그에서 관리합니다. 이 저장소는 npm CLI와 MCP server의 소스로 유지합니다.
+카탈로그에서 관리합니다. 이 디렉터리가 npm CLI와 MCP server의 소스입니다.
 
 ## 릴리스
 
-이 패키지는 GitHub Actions의 npm trusted publishing을 사용합니다. 새 버전을 배포하려면 package version을 올리고 생성된 태그를 push합니다.
+이 패키지는 저장소 루트의 `publish-codex-receipts.yml` GitHub Actions
+워크플로와 npm trusted publishing을 사용합니다. 이 디렉터리에서 npm 기본
+태그를 만들지 않고 package version을 올린 뒤, 변경을 커밋하고 패키지 전용
+태그를 push합니다.
 
 ```bash
-npm version patch
-git push origin main --tags
+npm version patch --no-git-tag-version
+git add package.json package-lock.json
+git commit -m "Release codex-receipts vX.Y.Z"
+git tag codex-receipts-vX.Y.Z
+git push origin main codex-receipts-vX.Y.Z
 ```
 
-`Publish to npm` workflow는 `v*` 태그에서만 실행되고, `npm test` 후 npm에 publish합니다. 변경 범위가 크면 `patch` 대신 `minor` 또는 `major`를 사용하세요. 새 CLI 버전을 배포한 뒤에는 카탈로그 skill에 고정된 버전도 별도로 갱신해야 합니다.
+워크플로는 `codex-receipts-v*` 태그에서만 실행되고, 태그와 `package.json`
+버전이 일치하는지 확인한 뒤 audit과 test를 거쳐 npm에 publish합니다. 변경
+범위가 크면 `patch` 대신 `minor` 또는 `major`를 사용하세요. 배포 후에는 같은
+저장소의 `skills/codex-receipts`가 고정한 버전도 갱신해야 합니다.
 
 ## 참고
 
