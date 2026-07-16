@@ -1,4 +1,0 @@
-interface:
-  display_name: "Storyboard Builder"
-  short_description: "Turn videos, scripts, or briefs into shooting boards"
-  default_prompt: "Use $storyboard-builder to turn this reference video or script into a detailed, localized shooting storyboard. Design any missing cuts, framing, timing, and character actions, then create original hand-drawn frames and a paginated A4 PDF."
