@@ -1,0 +1,4 @@
+interface:
+  display_name: "Karpathy Code Explainer"
+  short_description: "코드 근거와 인터랙티브 화면으로 프로젝트 구조·동작을 설명합니다"
+  default_prompt: "Use $karpathy-code-explainer to explain this project with concise prose, diagrams, interactive flows, and source references."

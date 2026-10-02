@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3eb">
+  <title>코드 아틀라스</title>
+  <style>
+    :root{--paper:#f6f3eb;--surface:#fffdf7;--ink:#163d38;--subtle:#506963;--line:#d8ddd1;--green:#17665b;--soft:#e2ece2;--orange:#a84b24;--orange-soft:#f8e8d5;--code:#153a34;--code-ink:#e2eee2;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;color:var(--ink);background:var(--paper);font-synthesis:none}
+    *,*::before,*::after{box-sizing:border-box}[hidden]{display:none!important}body{margin:0}html{scroll-behavior:smooth}button,input,select{font:inherit}button,select,input,summary{touch-action:manipulation}button,summary{cursor:pointer}button:disabled{cursor:default;opacity:.4}a{color:var(--green);text-underline-offset:3px}:focus-visible{outline:3px solid var(--orange);outline-offset:4px}h1,h2,h3,h4,p{margin-top:0}button{color:var(--ink)}code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .skip{position:absolute;left:20px;top:-70px;background:var(--surface);padding:12px 16px;z-index:20}.skip:focus{top:10px}.page{width:min(1240px,calc(100% - 80px));margin:auto}.masthead{padding:23px 0 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:11px;letter-spacing:.09em;font-weight:750}.masthead small{font-size:10px;color:var(--subtle)}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;padding:28px 0 21px}h1{margin-bottom:11px;font-size:clamp(29px,3.7vw,44px);line-height:1.28;letter-spacing:-.055em;font-weight:730}.hero p{max-width:610px;margin-bottom:0;font-size:13px;line-height:1.85;color:var(--subtle)}.stats{display:grid;grid-template-columns:repeat(3,auto);gap:24px;padding-bottom:4px}.stat strong{display:block;font:600 24px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin-bottom:5px}.stat span{font-size:9px;color:var(--subtle);white-space:nowrap}#scope{font-size:10px;line-height:1.8;color:var(--subtle);margin-bottom:18px;overflow-wrap:anywhere}.workspace{display:grid;grid-template-columns:170px minmax(0,1fr);gap:30px;border-top:2px solid var(--ink);padding-top:21px}.sidebar{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;padding-bottom:15px}.sidebar h2{font-size:10px;letter-spacing:.05em;color:var(--subtle);margin-bottom:12px}.module-nav{display:flex;flex-direction:column;gap:4px}.module-button{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border:0;background:transparent;border-radius:5px;padding:9px 10px;min-height:36px;font-size:12px;line-height:1.65;text-align:left;transition:background .16s}.module-button small{font:500 9px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--subtle)}.module-button:hover{background:#e7ebde}.module-button.is-selected{background:var(--ink);color:var(--surface)}.module-button.is-selected small{color:#c2d5c5}.control.mobile-modules{display:none}.content{min-width:0}.module-heading{display:flex;justify-content:space-between;gap:23px;padding:0 0 17px}#moduleTitle{font-size:26px;line-height:1.4;letter-spacing:-.04em;margin-bottom:8px}#moduleSummary{font-size:12px;line-height:1.85;color:var(--subtle);max-width:640px;margin:0}#moduleCount{font-size:10px;color:var(--subtle);line-height:1.8;text-align:right;min-width:70px;padding-top:7px}.file-buttons{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:19px}.source-button{border:1px solid #bdccbf;background:transparent;border-radius:4px;padding:6px 9px;min-height:29px;font-size:10px;line-height:1.65;text-align:left;color:var(--green);overflow-wrap:anywhere;transition:background .16s}.source-button:hover{background:var(--soft)}.source-button small{color:var(--subtle);font-size:9px;margin-left:5px}.tabs{display:flex;gap:26px;border-bottom:1px solid #bccbbc;margin-bottom:24px}.tab{background:transparent;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:12px 1px;font-size:12px;font-weight:650;color:var(--subtle)}.tab.is-selected{color:var(--ink);border-bottom-color:var(--ink)}.panel{min-width:0;padding-bottom:30px}.section-title{font-size:13px;line-height:1.7;letter-spacing:-.015em;margin-bottom:9px}.caption{font-size:11px;line-height:1.85;color:var(--subtle);margin-bottom:16px}.diagram-nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:11px;margin-bottom:16px}.diagram-node{border:1px solid #bdcbbb;border-radius:6px;background:var(--surface);padding:13px 14px;min-width:0}.diagram-node h4{font-size:12px;line-height:1.65;margin-bottom:10px}.diagram-node .file-buttons{margin-bottom:0;gap:5px}.diagram-node .source-button{font-size:9px;padding:5px 7px;border-color:#d0dacd;max-width:100%}.node-boundary{font-size:10px;line-height:1.8;color:var(--subtle);margin:0}.diagram-edges{margin-bottom:26px;border-top:1px solid var(--line)}.edge-row{padding:12px 0;border-bottom:1px solid var(--line)}.edge-top{display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:6px}.edge-top strong{font-size:11px;line-height:1.8}.edge-label{font-size:11px;line-height:1.8;color:var(--subtle);margin-bottom:7px}.edge-row .file-buttons{margin:8px 0 0}.badge-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}.badge{display:inline-block;font-size:9px;line-height:1.6;color:var(--green);background:var(--soft);padding:3px 6px;border-radius:3px;white-space:nowrap}.badge.uncertain,.badge.followup,.badge.alternative{background:var(--orange-soft);color:var(--orange)}.rules-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:27px}.evidence-card{border-top:1px solid var(--line);padding:12px 0}.evidence-card h4{font-size:12px;line-height:1.8;margin-bottom:7px}.evidence-card p{font-size:11px;line-height:1.95;color:var(--subtle);margin-bottom:9px}.evidence-card .file-buttons{margin:7px 0 0}.evidence-card .badge-row{margin:0 0 7px}.empty{font-size:11px;line-height:1.9;color:var(--subtle);margin:7px 0}.flow-picker{margin-bottom:19px}.control{display:flex;flex-direction:column;gap:7px;min-width:0}.control label{font-size:11px;color:var(--subtle)}select,input[type=search]{width:100%;border:1px solid #becbbe;border-radius:5px;background:var(--surface);color:var(--ink);padding:10px 11px;min-height:42px;font-size:12px}select{cursor:pointer;padding-right:29px}select:hover,input[type=search]:hover{border-color:var(--green)}input[type=search]::placeholder{color:#7b8a7c}#flowTitle{font-size:23px;line-height:1.5;letter-spacing:-.035em;margin-bottom:9px}#flowTrigger{font-size:12px;line-height:1.85;color:var(--subtle);margin-bottom:9px}#flowProgress{font-size:10px;line-height:1.8;color:var(--subtle);margin-bottom:20px}.flow-workbench{display:grid;grid-template-columns:.87fr 1.13fr;align-items:start;gap:23px}.flow-steps{display:flex;flex-direction:column;gap:7px;max-height:530px;overflow-y:auto;padding:0 4px 4px 0}.flow-step{width:100%;border:1px solid #c7d3c1;border-radius:5px;background:transparent;text-align:left;padding:11px 12px;transition:background .16s,border-color .16s}.flow-step:hover,.flow-step.is-selected{background:var(--soft);border-color:var(--green)}.flow-step.followup{border-left:3px dashed var(--orange)}.flow-step.alternative{border-left:3px solid var(--orange)}.flow-step strong{display:block;font-size:11px;line-height:1.8;margin-bottom:6px}.flow-step .badge-row{margin-bottom:0}.step-inspector{background:#e9eee1;border-top:2px solid var(--green);padding:16px 18px;min-width:0}.step-nav{display:flex;justify-content:space-between;gap:8px;margin-bottom:16px}.small-button{border:1px solid #bdccbc;border-radius:4px;background:transparent;padding:7px 10px;min-height:32px;font-size:10px;line-height:1.5}.small-button:hover:not(:disabled){background:var(--soft)}#stepTitle{font-size:15px;line-height:1.75;margin-bottom:10px}#stepDetail{font-size:12px;line-height:1.95;color:var(--subtle);white-space:pre-wrap;margin-bottom:13px}.source-reference{margin-top:12px;min-width:0}.excerpt{margin:8px 0 0;overflow:auto;max-height:220px;background:var(--surface);border-radius:4px;padding:9px 0;font:10px/1.85 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:4}.excerpt-line{display:grid;grid-template-columns:35px max-content;width:max-content;min-width:100%}.excerpt-number{padding:0 8px;text-align:right;color:#768673;user-select:none;position:sticky;left:0;background:var(--surface)}.excerpt-content{display:block;white-space:pre;padding:0 12px 0 8px}.search-controls{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr);gap:13px;margin-bottom:12px}.search-note{font-size:10px;line-height:1.8;color:var(--subtle);margin-bottom:19px}.code-workbench{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.9fr);gap:23px;align-items:start}.file-index{min-width:0}.list-heading{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px}.list-heading h3{font-size:12px;margin:0}#listCount{font-size:9px;color:var(--subtle)}.file-list{display:flex;flex-direction:column;gap:3px;max-height:540px;overflow-y:auto;padding:0 4px 3px 0}.file-button{display:block;width:100%;border:0;border-left:2px solid transparent;border-radius:0 4px 4px 0;background:transparent;padding:10px;text-align:left;transition:background .16s}.file-button:hover{background:#e7ebde}.file-button.is-selected{background:var(--soft);border-left-color:var(--green)}.file-button strong{display:block;font-size:11px;line-height:1.7;overflow-wrap:anywhere;margin-bottom:3px}.file-button small{display:block;font-size:9px;color:var(--subtle);line-height:1.9;overflow-wrap:anywhere}.file-button .file-path{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}#loadMore{width:100%;margin-top:10px;background:#e7ecdf;border:1px solid #ccd5c5;border-radius:4px;padding:9px;min-height:35px;font-size:10px}.file-viewer{min-width:0}.viewer-heading{display:flex;justify-content:space-between;gap:18px;align-items:baseline;margin-bottom:8px}#fileTitle{font-size:16px;line-height:1.7;letter-spacing:-.02em;overflow-wrap:anywhere;margin:0}#sourceLink{font-size:10px;white-space:nowrap}#fileSummary{font-size:11px;line-height:1.85;color:var(--subtle);margin-bottom:8px}#fileMeta{font-size:9px;line-height:1.9;color:var(--subtle);overflow-wrap:anywhere;margin-bottom:16px}.symbol-control{margin-bottom:11px}.symbol-control label{font-size:10px}.symbol-control select{min-height:36px;font-size:11px;padding:8px 10px}.code-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid #375c4e;background:#1b443c;padding:9px 10px;border-radius:5px 5px 0 0}.code-toolbar .small-button{font-size:9px;color:#d6e7d4;border-color:#607d68;padding:5px 8px;min-height:28px}.code-toolbar .small-button:hover:not(:disabled){background:#31584b}.code-pages{display:flex;gap:5px}#codeRange{color:#b4cab7;font:500 9px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:right}#codeBody{max-height:500px;min-height:210px;overflow:auto;background:var(--code);color:var(--code-ink);border-radius:0 0 5px 5px;padding:11px 0 15px;font:11px/1.85 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:4;overscroll-behavior:contain}#codeBody .empty{color:#b4ccba;padding:10px 15px}.code-line{display:grid;grid-template-columns:42px max-content;width:max-content;min-width:100%}.line-number{position:sticky;left:0;z-index:1;text-align:right;padding:0 10px 0 5px;color:#8bad96;background:var(--code);border-right:1px solid #305347;font-size:9px;user-select:none}.line-content{display:block;white-space:pre;padding:0 16px 0 12px}.code-line.selected{background:#315e4d}.code-line.selected .line-number{background:#315e4d;color:#f1c28b;box-shadow:inset 2px 0 0 #e5a165}.project-notes{border-top:1px solid var(--line);padding-top:15px;margin-top:5px}.project-notes summary{font-size:11px;font-weight:650;line-height:1.8}.project-notes h3{font-size:11px;margin:16px 0 7px}.project-notes ul{padding-left:19px;margin:0 0 15px}.project-notes li{font-size:10px;line-height:1.95;color:var(--subtle)}footer{border-top:1px solid var(--line);padding:18px 0 26px;margin-top:18px;color:var(--subtle);font-size:9px;line-height:1.95}.status-error{background:var(--orange-soft);padding:14px;font-size:12px;line-height:1.8}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .documentation-cards{margin-top:12px;min-width:0}.documentation-commands{max-width:100%;max-height:240px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:11px 13px;margin:12px 0 0;font:10px/1.9 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;tab-size:4;overscroll-behavior:contain}
+    @media(max-width:1040px){.page{width:calc(100% - 48px)}.workspace{grid-template-columns:145px minmax(0,1fr);gap:22px}.stats{gap:17px}.hero{align-items:flex-start}.module-button{font-size:11px;padding-left:8px}.code-workbench{grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:17px}.viewer-heading{display:block}#sourceLink{display:inline-block;margin-top:5px}.rules-grid{gap:22px}}
+    @media(max-width:760px){.page{width:calc(100% - 36px)}.hero{display:block;padding:23px 0 18px}h1{font-size:32px}.hero p{font-size:12px}.stats{grid-template-columns:repeat(3,1fr);padding-top:17px}.stat strong{font-size:22px}.workspace{display:block;padding-top:17px}.sidebar{position:static;max-height:none;overflow:visible;padding:0 0 17px;margin-bottom:18px;border-bottom:1px solid var(--line)}.sidebar h2,.module-nav{display:none}.control.mobile-modules{display:flex}.module-heading{padding-bottom:15px}#moduleTitle{font-size:24px}#moduleSummary{font-size:11px}#moduleCount{font-size:9px}.tabs{gap:23px;margin-bottom:20px}.tab{font-size:11px;padding:11px 1px}.diagram-nodes{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.code-workbench{grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:17px}.flow-workbench{gap:17px}.flow-step strong{font-size:10px}.badge{font-size:8px}.step-inspector{padding:14px 15px}.rules-grid{gap:19px}}
+    @media(max-width:520px){.masthead{padding:17px 0 14px;gap:12px}.brand{font-size:10px}.masthead small{font-size:9px}h1{font-size:29px;margin-bottom:10px}.hero p{font-size:11px}.stats{gap:12px}.stat strong{font-size:21px}.stat span{font-size:8px}#scope{font-size:9px}.module-heading{display:block}#moduleTitle{font-size:22px}#moduleCount{text-align:left;margin:8px 0 0;padding:0}.source-button{font-size:9px;padding:5px 8px}.diagram-nodes{gap:10px}.diagram-node{padding:11px}.diagram-node h4{font-size:11px}.diagram-node .source-button{font-size:8px}.rules-grid{grid-template-columns:1fr;gap:24px}.evidence-card h4{font-size:11px}.evidence-card p{font-size:10px}.flow-workbench{grid-template-columns:1fr;gap:15px}.flow-steps{max-height:300px}.flow-step{padding:10px 12px}.flow-step strong{font-size:11px}.badge{font-size:9px}#flowTitle{font-size:21px}#flowTrigger{font-size:11px}#stepDetail{font-size:11px}#stepTitle{font-size:14px}.search-controls{grid-template-columns:1fr;gap:11px}.control label{font-size:10px}select,input[type=search]{font-size:11px;min-height:41px}.code-workbench{grid-template-columns:1fr;gap:24px}.file-list{max-height:260px}.viewer-heading{padding-top:17px;border-top:1px solid var(--line)}#fileSummary{font-size:10px}#codeBody{font-size:10px;min-height:190px}.code-line{grid-template-columns:35px max-content}.line-number{font-size:8px;padding-right:8px}.line-content{padding-left:10px}#codeRange{font-size:8px}.project-notes li{font-size:9px}footer{font-size:8px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#workspace">코드 설명으로 바로 가기</a>
+  <div class="page">
+    <header class="masthead"><div class="brand">CODE ATLAS · 코드 지도</div><small>소스에 근거한 설명</small></header>
+    <main>
+      <div id="loadError" class="status-error" role="alert" hidden></div>
+      <div class="hero"><div><h1 id="projectTitle">코드 아틀라스</h1><p id="projectSummary">구조와 사용자 동작, 원본 코드를 함께 읽습니다.</p></div><div class="stats" aria-label="탐색 범위"><div class="stat"><strong id="codeCount">—</strong><span>본문 파일</span></div><div class="stat"><strong id="fileCount">—</strong><span>파일 색인</span></div><div class="stat"><strong id="flowCount">—</strong><span>설명 흐름</span></div></div></div>
+      <p id="scope"></p>
+      <div class="workspace" id="workspace">
+        <aside class="sidebar" aria-labelledby="moduleNavTitle"><h2 id="moduleNavTitle">살펴볼 기능</h2><div class="control mobile-modules"><label for="moduleSelect">기능 선택</label><select id="moduleSelect"></select></div><nav id="moduleNav" class="module-nav" aria-label="기능 선택"></nav></aside>
+        <div class="content">
+          <div class="module-heading"><div><h2 id="moduleTitle"></h2><p id="moduleSummary"></p></div><p id="moduleCount"></p></div>
+          <div id="moduleEntries" class="file-buttons" aria-label="기능의 진입점 파일"></div>
+          <div class="tabs" role="tablist" aria-label="설명 보기"><button id="tab-overview" type="button" class="tab is-selected" role="tab" data-tab="overview" aria-selected="true" aria-controls="panel-overview">개요</button><button id="tab-flows" type="button" class="tab" role="tab" data-tab="flows" aria-selected="false" aria-controls="panel-flows" tabindex="-1">흐름</button><button id="tab-code" type="button" class="tab" role="tab" data-tab="code" aria-selected="false" aria-controls="panel-code" tabindex="-1">코드 탐색</button></div>
+          <section id="panel-overview" class="panel" role="tabpanel" aria-labelledby="tab-overview">
+            <h3 class="section-title">구조와 연결</h3><p class="caption">노드의 파일을 열거나 연결의 코드 근거를 확인하세요. 선의 종류와 추론 여부를 구분합니다.</p><div id="diagramNodes" class="diagram-nodes" role="group" aria-label="구조 노드와 파일"></div><div id="diagramEdges" class="diagram-edges" aria-label="노드 사이의 연결과 근거"></div>
+            <div class="rules-grid"><div><h3 class="section-title">코드가 정하는 규칙</h3><div id="moduleRules"></div></div><div><h3 class="section-title">조건과 확인할 점</h3><div id="moduleNotes"></div></div></div>
+          </section>
+          <section id="panel-flows" class="panel" role="tabpanel" aria-labelledby="tab-flows" hidden>
+            <div class="control flow-picker"><label for="flowSelect">따라갈 동작</label><select id="flowSelect"></select></div><h3 id="flowTitle"></h3><p id="flowTrigger"></p><p id="flowProgress"></p>
+            <div class="flow-workbench"><div id="flowSteps" class="flow-steps" role="group" aria-label="처리 단계"></div><div id="stepInspector" class="step-inspector"><div class="step-nav"><button id="prevStep" type="button" class="small-button">← 이전 단계</button><button id="nextStep" type="button" class="small-button">다음 단계 →</button></div><div id="stepBadges" class="badge-row"></div><h4 id="stepTitle"></h4><p id="stepDetail" aria-live="polite"></p><div id="stepSources" aria-label="단계의 소스와 발췌"></div></div></div>
+          </section>
+          <section id="panel-code" class="panel" role="tabpanel" aria-labelledby="tab-code" hidden>
+            <div class="search-controls"><div class="control"><label for="search">모든 기능의 파일 · 경로 · 선언 이름 검색</label><input id="search" type="search" placeholder="파일 이름, 경로, 함수나 심볼" autocomplete="off" spellcheck="false"></div><div class="control"><label for="repoFilter">저장소</label><select id="repoFilter"></select></div></div><p class="search-note">검색어가 없으면 현재 기능의 파일을 봅니다. 검색은 파일 정보와 제공된 심볼 이름을 대상으로 하며, 소스 전체 본문 검색은 아닙니다.</p>
+            <div class="code-workbench"><aside class="file-index" aria-labelledby="fileListTitle"><div class="list-heading"><h3 id="fileListTitle">파일 목록</h3><span id="listCount" aria-live="polite"></span></div><div id="fileList" class="file-list" aria-label="파일 선택"></div><button id="loadMore" type="button">파일 60개 더 보기</button></aside><div class="file-viewer"><div class="viewer-heading"><h3 id="fileTitle"></h3><a id="sourceLink" target="_blank" rel="noopener noreferrer" hidden>원본 소스 ↗</a></div><p id="fileSummary"></p><p id="fileMeta"></p><div class="control symbol-control"><label for="symbolSelect">함수와 심볼로 이동</label><select id="symbolSelect"></select></div><div class="code-toolbar"><div class="code-pages"><button id="codePrev" type="button" class="small-button" aria-label="이전 코드 160행">← 이전 행</button><button id="codeNext" type="button" class="small-button" aria-label="다음 코드 160행">다음 행 →</button></div><span id="codeRange" aria-live="polite"></span></div><div id="codeBody" role="region" tabindex="0" aria-label="번호가 있는 원본 코드, 가로와 세로 스크롤 가능"></div></div></div>
+          </section>
+          <details id="guideDocumentation" class="project-notes" hidden><summary>개발 안내 · 실행·검사·갱신</summary><div id="documentationCards" class="documentation-cards"></div></details>
+          <details class="project-notes"><summary>이 설명의 검증 범위와 제한</summary><h3>확인한 범위</h3><ul id="validated"></ul><h3>남은 조건과 제한</h3><ul id="limitations"></ul></details>
+        </div>
+      </div>
+    </main>
+    <footer>소스 구조·근거 연결·설명 모델의 검증은 실제 시스템 실행과 구분합니다. 파일 분류와 선언 색인은 전체 실행 호출 그래프를 뜻하지 않습니다.</footer>
+  </div>
+  <script type="application/json" id="atlas-data">__DATA__</script>
+  <script id="atlasUI">
+  (() => {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    let payload;
+    try { payload = JSON.parse($('atlas-data').textContent); }
+    catch (_) { $('loadError').hidden = false; $('loadError').textContent = '설명 데이터를 읽지 못했습니다. 검증한 데이터로 HTML을 다시 생성해 주세요.'; return; }
+    const index = payload.index || {}, guide = payload.guide || {}, PAGE = 160;
+    const sourceFiles = Array.isArray(index.files) ? index.files : [];
+    const files = new Map(sourceFiles.map(file => [String(file.id), file]));
+    const repositories = new Map((index.repositories || []).map(repo => [String(repo.id), repo]));
+    let allRepoId = 'all';
+    while (repositories.has(allRepoId)) allRepoId = '_' + allRepoId;
+    const annotationList = Array.isArray(guide.fileAnnotations) ? guide.fileAnnotations : [];
+    const annotations = new Map(annotationList.map(annotation => [String(annotation.file), annotation]));
+    const authoredModules = Array.isArray(guide.modules) ? guide.modules : [];
+    const moduleList = authoredModules.map(module => ({...module, id:String(module.id)}));
+    let commonId = '__common__';
+    while (moduleList.some(module => module.id === commonId)) commonId += '_';
+    const commonFiles = sourceFiles.filter(file => !annotations.get(String(file.id))?.module);
+    if (commonFiles.length || !moduleList.length) moduleList.push({id:commonId,label:'공통 코드 · 미분류 파일',summary:'설명이 작성되지 않은 파일도 위치와 본문을 탐색할 수 있습니다. 파일 색인이 해당 코드의 동작을 설명하거나 검증한 것은 아닙니다.',entryFiles:[],diagram:{nodes:[],edges:[]},rules:[],notes:[]});
+    const modules = new Map(moduleList.map(module => [module.id, module]));
+    const flows = Array.isArray(guide.flows) ? guide.flows : [];
+    const flowMap = new Map(flows.map(flow => [String(flow.id), flow]));
+    const moduleFileIds = new Map(moduleList.map(module => {
+      const ids = new Set(module.id === commonId ? commonFiles.map(file => String(file.id)) : annotationList.filter(annotation => annotation.module === module.id).map(annotation => String(annotation.file)));
+      (module.entryFiles || []).forEach(id => ids.add(String(id)));
+      (module.diagram?.nodes || []).forEach(node => (node.files || []).forEach(id => ids.add(String(id))));
+      return [module.id, [...ids].filter(id => files.has(id))];
+    }));
+    const symbolMap = new Map(sourceFiles.map(file => [String(file.id), annotations.get(String(file.id))?.symbols || []]));
+    const searchTerms = new Map(sourceFiles.map(file => [String(file.id), [file.name,file.path,annotations.get(String(file.id))?.role,...(symbolMap.get(String(file.id)) || []).map(symbol => symbol.name)].filter(Boolean).join(' ').toLocaleLowerCase()]));
+    const tabs = ['overview','flows','code'];
+    const initialModule = moduleList[0]?.id || commonId;
+    function linesOf(file) {
+      if (!file || typeof file.text !== 'string') return [];
+      const lines = file.text.split(/\r?\n/);
+      if (lines[lines.length - 1] === '') lines.pop();
+      return lines;
+    }
+    function firstFile(moduleId) {
+      const ids = moduleFileIds.get(moduleId) || [];
+      return ids.find(id => typeof files.get(id)?.text === 'string') || ids[0] || sourceFiles.find(file => typeof file.text === 'string')?.id || sourceFiles[0]?.id || '';
+    }
+    function intInRange(value, low, high) {
+      const number = Number(value);
+      return Math.min(high, Math.max(low, Number.isFinite(number) ? Math.floor(number) : low));
+    }
+    function normalizeState(raw = {}) {
+      const module = modules.has(String(raw.module)) ? String(raw.module) : initialModule;
+      const matchingFlows = flows.filter(flow => flow.module === module);
+      const flow = matchingFlows.some(item => String(item.id) === String(raw.flow)) ? String(raw.flow) : String(matchingFlows[0]?.id || '');
+      const file = files.has(String(raw.file)) ? String(raw.file) : String(firstFile(module));
+      const steps = flowMap.get(flow)?.steps || [];
+      const bodyLines = linesOf(files.get(file)).length;
+      return {tab:tabs.includes(raw.tab) ? raw.tab : 'overview',module,flow,step:intInRange(raw.step,0,Math.max(0,steps.length-1)),file,line:intInRange(raw.line,1,Math.max(1,bodyLines)),q:String(raw.q || '').slice(0,200),repo:raw.repo === allRepoId || repositories.has(String(raw.repo)) ? String(raw.repo) : allRepoId};
+    }
+    function parseHash(hash) { return normalizeState(Object.fromEntries(new URLSearchParams(String(hash || '').replace(/^#/,'')))); }
+    function filteredFiles(current) {
+      const query = String(current.q || '').trim().toLocaleLowerCase();
+      const ids = new Set(moduleFileIds.get(current.module) || []);
+      return sourceFiles.filter(file => (current.repo === allRepoId || file.repo === current.repo) && (query ? searchTerms.get(String(file.id))?.includes(query) : ids.has(String(file.id))));
+    }
+    function codeSlice(file, requestedLine) {
+      const lines = linesOf(file), line = intInRange(requestedLine,1,Math.max(1,lines.length));
+      const start = Math.floor((line-1)/PAGE)*PAGE, end = Math.min(lines.length,start+PAGE);
+      return {line,start,end,total:lines.length,lines:lines.slice(start,end)};
+    }
+    function safeSourceUrl(value) {
+      if (typeof value !== 'string') return null;
+      try { const url = new URL(value); return url.protocol === 'https:' && !url.username && !url.password ? url.href : null; }
+      catch (_) { return null; }
+    }
+    let state = parseHash(location.hash), listLimit = 60;
+    function element(tag, className, text) {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = String(text);
+      return node;
+    }
+    function empty(text) { return element('p','empty',text); }
+    function button(text,className,action) { const node=element('button',className,text);node.type='button';if(action)node.addEventListener('click',action);return node; }
+    function option(value,text) { const node=element('option','',text);node.value=String(value);return node; }
+    const executionLabels={ui:'화면 동작',request:'요청',sync:'동기 처리',async:'비동기',scheduled:'예약 작업',background:'백그라운드',event:'이벤트',inference:'추론'};
+    const connectionLabels={direct:'직접 연결',followup:'별도 후속',alternative:'다른 분기'};
+    const certaintyLabels={source:'소스 근거',inference:'추론',unverified:'미검증'};
+    const edgeLabels={call:'호출',api:'API',event:'이벤트',storage:'저장·조회',import:'정적 import',inference:'추론 연결'};
+    function badge(text,className='') { return element('span','badge'+(className?' '+className:''),text); }
+    function certaintyBadge(certainty) { const kind=certainty || 'unverified';return badge(certaintyLabels[kind] || String(kind),kind==='source'?'':'uncertain'); }
+    function stepBadges(step) {
+      const row=element('div','badge-row');
+      row.append(badge(executionLabels[step.execution] || step.execution || '실행 유형 미표시'),badge(connectionLabels[step.connection] || step.connection || '연결 미표시',step.connection==='direct'?'':step.connection),certaintyBadge(step.certainty));
+      return row;
+    }
+    function fileButton(fileId,line=1,label) {
+      const file=files.get(String(fileId));
+      if(!file)return empty('알 수 없는 파일 참조');
+      const node=button(label || file.name || file.path,'source-button',()=>openFile(String(fileId),line));
+      const repo=repositories.get(String(file.repo));node.append(element('small','',(repo?.label || file.repo)+(typeof file.text==='string'?' · '+line+'행':' · 위치')));
+      return node;
+    }
+    function sourcesButtons(sources) {
+      const row=element('div','file-buttons');
+      (sources || []).forEach(source=>row.append(fileButton(source.file,source.line)));
+      return row;
+    }
+    function sourceExcerpt(source) {
+      const wrapper=element('div','source-reference');
+      wrapper.append(fileButton(source.file,source.line,'원본 코드에서 보기'));
+      const file=files.get(String(source.file)),lines=linesOf(file);
+      if(!lines.length){wrapper.append(empty('이 참조에는 표시할 코드 본문이 없습니다.'));return wrapper;}
+      const first=intInRange(source.line,1,lines.length),last=Math.min(lines.length,first+8,source.endLine ? intInRange(source.endLine,first,lines.length) : first+8);
+      const excerpt=element('div','excerpt');excerpt.tabIndex=0;excerpt.setAttribute('role','region');excerpt.setAttribute('aria-label',(file.name || file.path)+' '+first+'~'+last+'행 발췌, 가로 스크롤 가능');
+      for(let line=first;line<=last;line++){const row=element('div','excerpt-line');row.append(element('span','excerpt-number',line),element('code','excerpt-content',lines[line-1] || ' '));excerpt.append(row);}
+      wrapper.append(excerpt);return wrapper;
+    }
+    function evidenceCard(item) {
+      const card=element('article','evidence-card');card.append(element('h4','',item.title || '확인할 점'));
+      const badges=element('div','badge-row');badges.append(certaintyBadge(item.certainty));card.append(badges,element('p','',item.detail || ''),sourcesButtons(item.sources));return card;
+    }
+    function documentationCard(item) {
+      const card=evidenceCard(item);
+      if(Array.isArray(item.commands)&&item.commands.length){const commands=element('pre','documentation-commands');commands.textContent=item.commands.join('\n');commands.tabIndex=0;commands.setAttribute('role','region');commands.setAttribute('aria-label',(item.title || '개발 안내')+' 명령어 예시, 실행하지 않고 표시');card.append(commands);}
+      return card;
+    }
+    function commitState(mode='replace') {
+      const params=new URLSearchParams();
+      ['tab','module','flow','step','file','line','q','repo'].forEach(key=>{if(state[key]!==''&&state[key]!==undefined)params.set(key,String(state[key]));});
+      const hash='#'+params.toString();if(location.hash!==hash)history[mode==='push'?'pushState':'replaceState'](null,'',hash);
+    }
+    function navigate(change,mode='push') { state=normalizeState({...state,...change});listLimit=60;render();commitState(mode); }
+    function openFile(fileId,line=1) {
+      if(!files.has(fileId))return;
+      const assigned=annotations.get(fileId)?.module;
+      const belongs=(moduleFileIds.get(state.module)||[]).includes(fileId);
+      const module=belongs?state.module:modules.has(assigned)?assigned:moduleList.find(item=>(moduleFileIds.get(item.id)||[]).includes(fileId))?.id || commonId;
+      navigate({tab:'code',module,file:fileId,line,q:'',repo:allRepoId});
+    }
+    function renderModule() {
+      const module=modules.get(state.module);if(!module)return;
+      $('moduleTitle').textContent=module.label || module.id;$('moduleSummary').textContent=module.summary || '';
+      const count=(moduleFileIds.get(module.id)||[]).length,flowCount=flows.filter(flow=>flow.module===module.id).length;
+      $('moduleCount').textContent=count+'개 파일 · '+flowCount+'개 흐름';
+      $('moduleSelect').replaceChildren(...moduleList.map(item=>option(item.id,item.label || item.id)));$('moduleSelect').value=module.id;
+      $('moduleNav').replaceChildren(...moduleList.map(item=>{const selected=item.id===module.id,node=button(item.label || item.id,'module-button'+(selected?' is-selected':''),()=>navigate({module:item.id,flow:'',step:0,q:'',repo:allRepoId,file:firstFile(item.id),line:1}));node.setAttribute('aria-current',selected?'true':'false');node.append(element('small','',(moduleFileIds.get(item.id)||[]).length));return node;}));
+      $('moduleEntries').replaceChildren(...(module.entryFiles || []).map(id=>fileButton(id)));
+      document.querySelectorAll('[data-tab]').forEach(node=>{const selected=node.dataset.tab===state.tab;node.classList.toggle('is-selected',selected);node.setAttribute('aria-selected',String(selected));node.tabIndex=selected?0:-1;});
+      tabs.forEach(tab=>$('panel-'+tab).hidden=state.tab!==tab);
+    }
+    function renderOverview() {
+      const module=modules.get(state.module),diagram=module?.diagram || {},nodes=diagram.nodes || [],nodeMap=new Map(nodes.map(node=>[String(node.id),node]));
+      $('diagramNodes').replaceChildren(...nodes.map(node=>{const card=element('article','diagram-node');card.append(element('h4','',node.label || node.id));const row=element('div','file-buttons');(node.files || []).forEach(id=>row.append(fileButton(id)));card.append(row.children.length?row:element('p','node-boundary','저장소 밖의 경계 또는 별도 파일 없는 노드'));return card;}));
+      if(!nodes.length)$('diagramNodes').append(empty('이 기능에는 작성된 구조 도식이 없습니다. 진입점과 파일 목록을 확인할 수 있습니다.'));
+      const edges=diagram.edges || [];
+      $('diagramEdges').replaceChildren(...edges.map(edge=>{const row=element('article','edge-row'),top=element('div','edge-top');top.append(element('strong','',(nodeMap.get(String(edge.from))?.label || edge.from)+' → '+(nodeMap.get(String(edge.to))?.label || edge.to)),badge(edgeLabels[edge.kind] || edge.kind || '연결'),certaintyBadge(edge.certainty));row.append(top,element('p','edge-label',edge.label || ''),sourcesButtons(edge.sources));if(edge.kind==='import')row.append(element('p','edge-label','이 연결은 정적 import 참조이며 실행 호출을 증명하지 않습니다.'));return row;}));
+      if(nodes.length&&!edges.length)$('diagramEdges').append(empty('작성된 연결 근거가 없습니다. 노드의 배열 순서가 실행 순서를 뜻하지 않습니다.'));
+      $('moduleRules').replaceChildren(...(module?.rules || []).map(evidenceCard));if(!(module?.rules || []).length)$('moduleRules').append(empty('이 기능에는 별도로 작성된 규칙이 없습니다.'));
+      $('moduleNotes').replaceChildren(...(module?.notes || []).map(evidenceCard));if(!(module?.notes || []).length)$('moduleNotes').append(empty('별도 기록한 조건이 없습니다. 실제 실행 검증을 뜻하지 않습니다.'));
+    }
+    function renderFlow() {
+      const choices=flows.filter(flow=>flow.module===state.module),flow=flowMap.get(state.flow);
+      $('flowSelect').replaceChildren(...choices.map(item=>option(item.id,item.title || item.id)));$('flowSelect').disabled=!choices.length;$('flowSelect').value=state.flow;
+      $('flowTitle').textContent=flow?.title || '이 기능에는 작성된 흐름이 없습니다.';$('flowTrigger').textContent=flow?.trigger || '';
+      const steps=flow?.steps || [];$('flowProgress').textContent=steps.length?(state.step+1)+' / '+steps.length+' 단계 · 별도 후속 작업과 다른 분기를 구분합니다.':'';
+      $('stepInspector').hidden=!steps.length;
+      $('flowSteps').replaceChildren(...steps.map((step,position)=>{const node=button('', 'flow-step'+(position===state.step?' is-selected':'')+(step.connection==='followup'?' followup':'')+(step.connection==='alternative'?' alternative':''),()=>navigate({step:position},'replace'));node.setAttribute('aria-current',position===state.step?'step':'false');node.append(element('strong','',String(position+1).padStart(2,'0')+' · '+(step.title || '단계')),stepBadges(step));return node;}));
+      const selected=steps[state.step];if(!selected)return;
+      $('stepBadges').replaceChildren(...stepBadges(selected).childNodes);$('stepTitle').textContent=selected.title || '';$('stepDetail').textContent=selected.detail || '';
+      $('stepSources').replaceChildren(...(selected.sources || []).map(sourceExcerpt));if(!(selected.sources || []).length)$('stepSources').append(empty('이 단계에는 소스 근거가 없습니다.'));
+      $('prevStep').disabled=state.step===0;$('nextStep').disabled=state.step>=steps.length-1;
+    }
+    function renderFiles() {
+      const matching=filteredFiles(state),visible=matching.slice(0,listLimit);
+      if(document.activeElement!==$('search'))$('search').value=state.q;
+      $('repoFilter').value=state.repo;
+      $('listCount').textContent=Math.min(listLimit,matching.length)+' / '+matching.length+'개';
+      $('fileList').replaceChildren(...visible.map(file=>{const node=button('','file-button'+(state.file===String(file.id)?' is-selected':''),()=>openFile(String(file.id),1));node.setAttribute('aria-current',state.file===String(file.id)?'true':'false');node.append(element('strong','',file.name || file.path),element('small','',(repositories.get(String(file.repo))?.label || file.repo)+' · '+(annotations.get(String(file.id))?.role || (typeof file.text==='string'?'코드':'본문 미포함'))),element('small','file-path',file.path));return node;}));
+      if(!visible.length)$('fileList').append(empty('선택한 기능·저장소·검색어에 일치하는 파일이 없습니다.'));
+      $('loadMore').hidden=matching.length<=listLimit;
+    }
+    function renderCode() {
+      renderFiles();const file=files.get(state.file);
+      $('fileTitle').textContent=file?.name || file?.path || '살펴볼 파일을 선택하세요';
+      $('fileSummary').textContent=file?annotations.get(String(file.id))?.summary || (typeof file.text==='string'?'원본 코드 본문을 표시합니다. 이 파일에는 별도 역할 설명이 작성되지 않았습니다.':'파일 위치와 메타데이터만 제공합니다. 본문은 포함하지 않았습니다.'):'이 색인에는 표시할 파일이 없습니다.';
+      const repo=repositories.get(String(file?.repo));$('fileMeta').textContent=file?[(repo?.label || file.repo),file.path,repo?.revision,file.sha256?'SHA-256 '+file.sha256:''].filter(Boolean).join(' · '):'';
+      const sourceUrl=safeSourceUrl(file?.sourceUrl);$('sourceLink').hidden=!sourceUrl;if(sourceUrl)$('sourceLink').href=sourceUrl;else $('sourceLink').removeAttribute('href');
+      const symbols=symbolMap.get(String(file?.id)) || [];$('symbolSelect').replaceChildren(option('','선언 이름으로 이동'),...symbols.map(symbol=>option(symbol.line,symbol.name+' · '+symbol.line+'행')));$('symbolSelect').disabled=!symbols.length;$('symbolSelect').value=symbols.some(symbol=>Number(symbol.line)===state.line)?String(state.line):'';
+      const page=codeSlice(file,state.line);$('codeBody').replaceChildren();
+      if(!file || typeof file.text!=='string'){$('codeBody').append(empty('이 파일의 코드 본문은 포함하지 않았습니다. 파일 위치와 허용된 원본 링크를 확인하세요.'));$('codeRange').textContent='본문 미포함';$('codePrev').disabled=true;$('codeNext').disabled=true;return;}
+      if(!page.total)$('codeBody').append(empty('비어 있는 코드 파일입니다.'));
+      page.lines.forEach((line,offset)=>{const lineNumber=page.start+offset+1,row=element('div','code-line'+(lineNumber===state.line?' selected':''));row.append(element('span','line-number',lineNumber),element('code','line-content',line || ' '));$('codeBody').append(row);});
+      $('codeRange').textContent=page.total?(page.start+1)+'–'+page.end+' / '+page.total+'행':'0행';$('codePrev').disabled=page.start===0;$('codeNext').disabled=page.end>=page.total;
+      const selected=$('codeBody').querySelector('.selected');if(selected)$('codeBody').scrollTop=Math.max(0,selected.offsetTop-$('codeBody').offsetTop-70);
+    }
+    function render() { state=normalizeState(state);renderModule();if(state.tab==='overview')renderOverview();else if(state.tab==='flows')renderFlow();else renderCode(); }
+    // Start the interface.
+    const project=guide.project || {};$('projectTitle').textContent=project.title || '코드 아틀라스';document.title=project.title || '코드 아틀라스';$('projectSummary').textContent=project.summary || '소스에 근거한 구조·흐름·파일 탐색입니다.';
+    const coverage=index.coverage || {};$('codeCount').textContent=coverage.codeFiles ?? sourceFiles.filter(file=>typeof file.text==='string').length;$('fileCount').textContent=coverage.files ?? sourceFiles.length;$('flowCount').textContent=flows.length;
+    $('scope').textContent=[project.scope,coverage.excludedFiles?'제외 파일 '+coverage.excludedFiles+'개':'',...Array.from(repositories.values()).map(repo=>(repo.label || repo.id)+(repo.revision?' · '+repo.revision:''))].filter(Boolean).join(' / ');
+    const documentation=Array.isArray(guide.documentation)?guide.documentation:[];$('guideDocumentation').hidden=!documentation.length;$('documentationCards').replaceChildren(...documentation.map(documentationCard));
+    $('validated').replaceChildren(...(project.validated || []).map(text=>element('li','',text)));if(!(project.validated || []).length)$('validated').append(element('li','','별도의 실행 검증 결과가 제공되지 않았습니다.'));
+    $('limitations').replaceChildren(...(project.limitations || []).map(text=>element('li','',text)));if(!(project.limitations || []).length)$('limitations').append(element('li','','소스와 설명의 구조 검증은 실제 시스템 동작의 검증을 뜻하지 않습니다.'));
+    $('repoFilter').replaceChildren(option(allRepoId,'모든 저장소'),...Array.from(repositories.values()).map(repo=>option(repo.id,repo.label || repo.id)));
+    $('moduleSelect').addEventListener('change',()=>navigate({module:$('moduleSelect').value,flow:'',step:0,file:firstFile($('moduleSelect').value),line:1,q:'',repo:allRepoId}));
+    const tabButtons=Array.from(document.querySelectorAll('[data-tab]'));
+    tabButtons.forEach((node,position)=>{node.addEventListener('click',()=>navigate({tab:node.dataset.tab}));node.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const target=event.key==='Home'?0:event.key==='End'?tabButtons.length-1:(position+(event.key==='ArrowRight'?1:-1)+tabButtons.length)%tabButtons.length;navigate({tab:tabButtons[target].dataset.tab});tabButtons[target].focus();});});
+    $('flowSelect').addEventListener('change',()=>navigate({flow:$('flowSelect').value,step:0}));$('prevStep').addEventListener('click',()=>navigate({step:state.step-1},'replace'));$('nextStep').addEventListener('click',()=>navigate({step:state.step+1},'replace'));
+    $('search').addEventListener('input',()=>{state=normalizeState({...state,q:$('search').value});listLimit=60;renderFiles();commitState('replace');});$('repoFilter').addEventListener('change',()=>{state=normalizeState({...state,repo:$('repoFilter').value});listLimit=60;renderFiles();commitState('replace');});$('loadMore').addEventListener('click',()=>{listLimit+=60;renderFiles();});
+    $('symbolSelect').addEventListener('change',()=>{if($('symbolSelect').value)navigate({line:Number($('symbolSelect').value)},'replace');});$('codePrev').addEventListener('click',()=>navigate({line:Math.max(1,Math.floor((state.line-1)/PAGE)*PAGE-PAGE+1)},'replace'));$('codeNext').addEventListener('click',()=>navigate({line:Math.floor((state.line-1)/PAGE)*PAGE+PAGE+1},'replace'));
+    const restore=()=>{state=parseHash(location.hash);listLimit=60;render();};window.addEventListener('popstate',restore);window.addEventListener('hashchange',restore);
+    render();commitState('replace');
+  })();
+  </script>
+</body>
+</html>

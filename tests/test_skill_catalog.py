@@ -29,7 +29,7 @@ class SkillCatalogTests(unittest.TestCase):
         directories = sorted(
             path.name for path in SKILLS.iterdir() if path.is_dir()
         )
-        self.assertEqual(directories, ["codex-receipts", "storyboard-builder"])
+        self.assertEqual(directories, ["codex-receipts", "karpathy-code-explainer", "storyboard-builder"])
 
     def test_skill_metadata_matches_directory(self) -> None:
         names: set[str] = set()
@@ -54,6 +54,7 @@ class SkillCatalogTests(unittest.TestCase):
             self.assertIn("npx skills add iamxoghks/skills", text)
             self.assertIn("iamxoghks/skills/tree/main/skills/storyboard-builder", text)
             self.assertIn("iamxoghks/skills/tree/main/skills/codex-receipts", text)
+            self.assertIn("iamxoghks/skills/tree/main/skills/karpathy-code-explainer", text)
 
     def test_skill_packages_do_not_expose_private_context(self) -> None:
         private_terms = [

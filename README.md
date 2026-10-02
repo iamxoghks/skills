@@ -13,6 +13,7 @@ Codex와 Agent Skills 호환 에이전트에서 사용할 수 있는 공개 스�
 | --- | --- | --- |
 | `storyboard-builder` | 참고 영상, 대본 또는 기획안을 손그림 촬영 콘티와 HTML·Markdown·A4 PDF로 변환합니다. | [skills.sh](https://skills.sh/iamxoghks/skills/storyboard-builder) |
 | `codex-receipts` | 로컬 Codex 작업 기록을 영수증 형식으로 요약하는 설치형 CLI를 안전하게 사용합니다. | [skills.sh](https://skills.sh/iamxoghks/skills/codex-receipts) |
+| `karpathy-code-explainer` | 코드 근거, 다이어그램과 인터랙티브 HTML로 복잡한 동작·프로젝트 구조·개발 문서를 설명합니다. | [스킬 문서](skills/karpathy-code-explainer/SKILL.md) |
 
 ![Storyboard Builder 한국어 예시](skills/storyboard-builder/examples/sample-storyboard-preview.png)
 
@@ -38,6 +39,12 @@ npx skills add iamxoghks/skills \
   --global \
   --agent codex \
   --yes
+
+npx skills add iamxoghks/skills \
+  --skill karpathy-code-explainer \
+  --global \
+  --agent codex \
+  --yes
 ```
 
 Codex의 `$skill-installer`를 사용할 때는 스킬 폴더를 직접 지정합니다.
@@ -45,10 +52,11 @@ Codex의 `$skill-installer`를 사용할 때는 스킬 폴더를 직접 지정�
 ```text
 $skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/storyboard-builder
 $skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/codex-receipts
+$skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/karpathy-code-explainer
 ```
 
-설치 후 Codex를 다시 시작하면 `$storyboard-builder` 또는
-`$codex-receipts`로 사용할 수 있습니다.
+설치 후 Codex를 다시 시작하면 `$storyboard-builder`, `$codex-receipts`,
+`$karpathy-code-explainer`로 사용할 수 있습니다.
 
 ## 스킬별 요구 사항
 
@@ -74,6 +82,24 @@ npm install --global codex-receipts@1.2.11
 
 CLI와 MCP 서버 소스는
 [`packages/codex-receipts`](packages/codex-receipts)에서 관리합니다.
+
+### Karpathy Code Explainer
+
+- Python 3.9 이상; Python 도구는 표준 라이브러리만 사용합니다.
+- 생성한 HTML을 확인할 브라우저와 에이전트의 코드 분석 기능
+
+[Andrej Karpathy의 글](https://x.com/karpathy/status/2105819303471976479)에서
+영감을 받은 독립적인 스킬입니다. 한 가지 동작을 실험하거나, 프론트엔드와
+백엔드의 전체 구조를 탐색하거나, 개발 문서와 온보딩 자료를 만들 수 있습니다.
+주요 설명은 원본 파일·줄 번호에 연결되며, 생성한 HTML은 오프라인에서도 열립니다.
+
+```text
+$karpathy-code-explainer 이 프로젝트의 프론트엔드와 백엔드를 인터랙티브 개발 문서로 설명해줘.
+```
+
+사용 범위와 검증 절차는
+[`skills/karpathy-code-explainer/SKILL.md`](skills/karpathy-code-explainer/SKILL.md)를
+참고하세요.
 
 ## 검증
 
