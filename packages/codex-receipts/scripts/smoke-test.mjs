@@ -1,40 +1,70 @@
-import { existsSync, readFileSync } from "node:fs";
+import assert from "node:assert/strict";
+import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { HtmlRenderer } from "../dist/core/html-renderer.js";
 import { getPrinterLocaleWarning } from "../dist/utils/printer-warning.js";
 
-const cli = ["node", "bin/codex-receipts.js"];
+const packageRoot = fileURLToPath(new URL("../", import.meta.url));
+const cli = [
+  process.execPath,
+  "--import",
+  new URL("./smoke-fixture-preload.mjs", import.meta.url).href,
+  fileURLToPath(new URL("../bin/codex-receipts.js", import.meta.url)),
+];
 const packageJson = JSON.parse(
   readFileSync(new URL("../package.json", import.meta.url), "utf-8"),
 );
 
-runCli(["--version"], packageJson.version);
-runCli(["--help"], "Usage: codex-receipts");
-runCli(["generate", "--help"], "Generate a receipt for a Codex session");
-testHtmlEscaping();
-testPrinterLocaleWarning();
+const fixtureRoot = await mkdtemp(join(tmpdir(), "codex-receipts-smoke-"));
+const fixtureSessionId = "00000000-0000-4000-8000-000000000002";
+const olderSessionId = "00000000-0000-4000-8000-000000000001";
+const testEnv = Object.fromEntries(
+  Object.entries({
+    ...process.env,
+    CODEX_RECEIPTS_SMOKE_FIXTURE: fixtureRoot,
+    NO_COLOR: "1",
+  }).filter(([, value]) => typeof value === "string"),
+);
 
-const hasCodexSessions =
-  existsSync(`${process.env.HOME}/.codex/session_index.jsonl`) ||
-  existsSync(`${process.env.HOME}/.codex/sessions`);
-
-if (hasCodexSessions) {
+try {
+  await createFixtureSessions();
+  const initialFiles = await listFixtureFiles(fixtureRoot);
+  runCli(["--version"], packageJson.version);
+  runCli(["--help"], "Usage: codex-receipts");
+  runCli(["generate", "--help"], "Generate a receipt for a Codex session");
+  testHtmlEscaping();
+  testPrinterLocaleWarning();
   runCli(["generate", "--output", "console"], "Proof of work");
+  runCli(
+    ["generate", "--session", "Smoke fixture", "--output", "console", "--locale", "ko"],
+    "사용자 프롬프트",
+  );
   await runMcpSmokeTest();
-} else {
-  console.log("Skipping session-dependent smoke tests: no local Codex sessions found.");
+  assert.deepEqual(await listFixtureFiles(fixtureRoot), initialFiles);
+  console.log("CLI, MCP, localization, and HTML escaping smoke tests passed using isolated fixtures.");
+} finally {
+  await rm(fixtureRoot, { recursive: true, force: true });
 }
 
 function runCli(args, expectedText) {
   const result = spawnSync(cli[0], [...cli.slice(1), ...args], {
     encoding: "utf-8",
+    cwd: packageRoot,
+    env: testEnv,
+    input: "",
+    timeout: 15_000,
+    maxBuffer: 1_000_000,
   });
 
   if (result.status !== 0) {
     throw new Error(
-      `Command failed: ${cli.join(" ")} ${args.join(" ")}\n${result.stderr}`,
+      `Command failed: ${args.join(" ")}\n${result.error || result.stderr}`,
     );
   }
 
@@ -54,11 +84,15 @@ async function runMcpSmokeTest() {
   const transport = new StdioClientTransport({
     command: cli[0],
     args: [...cli.slice(1), "mcp"],
+    cwd: packageRoot,
+    env: testEnv,
     stderr: "pipe",
   });
 
   try {
     await client.connect(transport);
+    assert.equal(client.getServerVersion()?.name, "codex-receipts");
+    assert.equal(client.getServerVersion()?.version, packageJson.version);
     const tools = await client.listTools();
     const toolNames = tools.tools.map((tool) => tool.name);
     for (const expected of ["list_codex_sessions", "generate_codex_receipt"]) {
@@ -71,14 +105,116 @@ async function runMcpSmokeTest() {
       name: "list_codex_sessions",
       arguments: { limit: 1 },
     });
-    const text =
-      sessions.content?.[0]?.type === "text" ? sessions.content[0].text : "";
-    if (!text.includes("sessions")) {
-      throw new Error("MCP list_codex_sessions did not return session text.");
+    assert.notEqual(sessions.isError, true);
+    const sessionList = readStructuredResult(sessions).sessions;
+    assert.equal(sessionList.length, 1);
+    assert.equal(sessionList[0].sessionId, fixtureSessionId);
+    assert.equal(sessionList[0].threadName, "Smoke fixture session");
+    assert.equal(sessionList[0].totalTokens, 240);
+    assert.deepEqual(sessionList[0].modelsUsed, ["codex"]);
+
+    const filtered = await client.callTool({
+      name: "list_codex_sessions",
+      arguments: { limit: 10, query: "Older fixture" },
+    });
+    assert.notEqual(filtered.isError, true);
+    assert.deepEqual(
+      readStructuredResult(filtered).sessions.map((session) => session.sessionId),
+      [olderSessionId],
+    );
+
+    const generated = await client.callTool({
+      name: "generate_codex_receipt",
+      arguments: {
+        session: "Smoke fixture",
+        location: "Test Lab",
+        locale: "ko",
+        cashierLabel: "담당",
+        cashier: "Fixture Bot",
+        footerMessage: "Fixture only.",
+        saveHtml: false,
+      },
+    });
+    assert.notEqual(generated.isError, true);
+    const receipt = readStructuredResult(generated);
+    assert.equal(receipt.sessionId, fixtureSessionId);
+    assert.equal(receipt.totalTokens, 240);
+    assert.ok(receipt.totalPoints > 0);
+    assert.equal(receipt.htmlPath, undefined);
+    assert.equal(receipt.printer, undefined);
+    for (const expected of ["위치: Test Lab", "사용자 프롬프트", "컨텍스트 토큰", "담당: Fixture Bot", "Fixture only."]) {
+      assert.ok(receipt.receipt.includes(expected), `MCP Korean receipt is missing ${expected}.`);
     }
+    assert.ok(generated.content.some((part) => part.type === "text" && part.text.includes("위치: Test Lab")));
+
+    let invalidArgumentsRejected = false;
+    try {
+      const invalid = await client.callTool({
+        name: "list_codex_sessions",
+        arguments: { limit: 0 },
+      });
+      invalidArgumentsRejected = invalid.isError === true;
+    } catch (error) {
+      invalidArgumentsRejected = /invalid|validation|argument|limit/i.test(String(error));
+    }
+    assert.ok(invalidArgumentsRejected, "MCP must reject a session limit of 0.");
   } finally {
     await client.close();
   }
+}
+
+function readStructuredResult(result) {
+  const text = result.content.find((part) => part.type === "text")?.text;
+  assert.ok(text, "MCP result must contain text content.");
+  if (result.structuredContent) return result.structuredContent;
+  return JSON.parse(text);
+}
+
+async function createFixtureSessions() {
+  const codexDir = join(fixtureRoot, ".codex");
+  const sessionDir = join(codexDir, "sessions", "2026", "01");
+  await mkdir(sessionDir, { recursive: true });
+  await writeFile(join(fixtureRoot, "smoke-fixture.json"), JSON.stringify({ fixture: true }));
+  await writeFile(
+    join(codexDir, "session_index.jsonl"),
+    [
+      { id: olderSessionId, thread_name: "Older fixture session", updated_at: "2026-01-01T00:00:00.000Z" },
+      { id: fixtureSessionId, thread_name: "Smoke fixture session", updated_at: "2026-01-02T00:00:06.000Z" },
+    ].map((entry) => JSON.stringify(entry)).join("\n") + "\n{partial\n",
+  );
+  for (const [id, day, totalTokens] of [
+    [olderSessionId, "01", 42],
+    [fixtureSessionId, "02", 240],
+  ]) {
+    const timestamp = (second) => `2026-01-${day}T00:00:0${second}.000Z`;
+    const entries = [
+      { timestamp: timestamp(0), type: "session_meta", payload: { id, cwd: "fixture-project" } },
+      { timestamp: timestamp(0), type: "turn_context", payload: { model: "codex" } },
+      { timestamp: timestamp(1), type: "response_item", payload: { type: "message", role: "user", content: [{ type: "input_text", text: "Explain this generic example." }] } },
+      { timestamp: timestamp(2), type: "response_item", payload: { type: "reasoning" } },
+      { timestamp: timestamp(3), type: "response_item", payload: { type: "function_call", name: "example_tool" } },
+      { timestamp: timestamp(4), type: "response_item", payload: { type: "function_call_output" } },
+      { timestamp: timestamp(5), type: "response_item", payload: { type: "message", role: "assistant", content: [{ type: "output_text", text: "A generic example is explained." }] } },
+      { timestamp: timestamp(6), type: "event_msg", payload: { type: "token_count", info: { total_token_usage: { input_tokens: totalTokens - 10, output_tokens: 10, cached_input_tokens: 5, reasoning_output_tokens: 2, total_tokens: totalTokens } } } },
+    ];
+    await writeFile(
+      join(sessionDir, `rollout-2026-01-${day}-${id}.jsonl`),
+      entries.map((entry) => JSON.stringify(entry)).join("\n") + "\n{partial\n",
+    );
+  }
+}
+
+async function listFixtureFiles(directory, prefix = "") {
+  const files = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const relative = join(prefix, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...await listFixtureFiles(join(directory, entry.name), relative));
+    } else {
+      files.push([relative, await readFile(join(directory, entry.name), "utf-8")]);
+    }
+  }
+  return files.sort(([left], [right]) => left.localeCompare(right));
 }
 
 function testHtmlEscaping() {

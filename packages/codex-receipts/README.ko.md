@@ -20,6 +20,12 @@ Codex 작업 세션을 영수증처럼 요약해 주는 작은 CLI/MCP 도구입
 영수증에는 프롬프트나 응답 원문이 표시되지 않습니다. `pts`는 재미용
 점수이며 API 과금액이나 실제 비용이 아닙니다.
 
+## 요구 사항
+
+Node.js 22.12.0 이상이 필요합니다. Node 22.12, 24, 26에서 검증합니다.
+USB 출력은 USB 3의 WebUSB API를 사용하며, TCP와 CUPS 프린터는 기존
+명령 형식을 그대로 사용합니다.
+
 ## Codex 스킬로 설치
 
 Codex 대화창에 다음 명령을 입력합니다.
@@ -44,7 +50,7 @@ npx skills add iamxoghks/skills \
 일치하는 CLI 버전을 한 번 설치합니다.
 
 ```bash
-npm install --global codex-receipts@1.2.11
+npm install --global codex-receipts@1.3.0
 ```
 
 ## npm으로 실행

@@ -1,5 +1,9 @@
 # Codex Receipts dependency refresh — 2026-10-03
 
+This note records the initial compatible refresh. The subsequent full major
+upgrade and release is tracked in
+[the 1.3.0 handoff](2026-10-03-receipts-latest-release.md).
+
 ## Purpose and result
 
 The production dependency audit reported six findings against the previous

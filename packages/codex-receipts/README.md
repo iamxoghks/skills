@@ -20,6 +20,12 @@ This fork turns the original [`claude-receipts`](https://github.com/chrishutchin
 The receipt does not reproduce prompt or reply bodies. The points are
 intentionally playful and are not API billing numbers.
 
+## Requirements
+
+Node.js 22.12.0 or newer is required. The package is tested on Node 22.12,
+24, and 26. USB printing uses the USB 3 WebUSB API; TCP and CUPS printer
+interfaces keep their existing command syntax.
+
 ## Install As A Codex Skill
 
 Enter this command in a Codex conversation:
@@ -44,7 +50,7 @@ The skill does not download packages at runtime. Install its matching CLI
 version once before invoking the skill:
 
 ```bash
-npm install --global codex-receipts@1.2.11
+npm install --global codex-receipts@1.3.0
 ```
 
 ## Install From npm

@@ -1,3 +1,5 @@
+/// <reference types="w3c-web-usb" />
+
 import { createConnection } from "net";
 import { execFile } from "child_process";
 import { promisify } from "util";
@@ -185,7 +187,7 @@ export class ThermalPrinterRenderer {
    *
    * Supported interface formats:
    *   - "tcp://host:port" — send via TCP socket
-   *   - "usb" — auto-detect Epson TM-T88V via libusb
+   *   - "usb" — auto-detect Epson TM-T88V via WebUSB
    *   - "usb:VID:PID" — specific USB vendor/product ID (hex)
    *   - anything else — treated as a CUPS printer name
    */
@@ -318,35 +320,42 @@ export class ThermalPrinterRenderer {
   }
 
   /**
-   * Send buffer directly to a USB printer via libusb.
+   * Load USB support only when physical USB printing is requested.
+   */
+  private loadUsb() {
+    return import("usb");
+  }
+
+  /**
+   * Send buffer directly to a USB printer via the node-usb WebUSB API.
    *
    * @param buffer ESC/POS data
    * @param spec "usb" for auto-detect, or "usb:VID:PID" for specific device
    */
   private async sendViaUsb(buffer: Buffer, spec: string): Promise<void> {
-    const { findByIds, getDeviceList, OutEndpoint } = await import("usb");
-
     let vid = EPSON_VENDOR_ID;
     let pid = TM_T88V_PRODUCT_ID;
 
     // Parse "usb:VID:PID" if provided
     if (spec.startsWith("usb:")) {
-      const parts = spec.split(":");
-      if (parts.length >= 3) {
-        vid = parseInt(parts[1], 16);
-        pid = parseInt(parts[2], 16);
+      const match = /^usb:(?:0x)?([\da-f]{1,4}):(?:0x)?([\da-f]{1,4})$/i.exec(spec);
+      if (!match) {
+        throw new Error("Invalid USB printer interface. Use usb:VID:PID with hexadecimal IDs (0000–ffff).");
       }
+      vid = parseInt(match[1], 16);
+      pid = parseInt(match[2], 16);
     }
 
-    const device = findByIds(vid, pid);
+    const { usb } = await this.loadUsb();
+    const device = await usb.findDeviceByIds(vid, pid);
     if (!device) {
       // List what USB devices we can see to help debug
-      const devices = getDeviceList();
+      const devices = await usb.getDevices();
       const summary = devices
         .slice(0, 10)
         .map(
           (d) =>
-            `  ${d.deviceDescriptor.idVendor.toString(16)}:${d.deviceDescriptor.idProduct.toString(16)}`,
+            `  ${d.vendorId.toString(16)}:${d.productId.toString(16)}`,
         )
         .join("\n");
 
@@ -362,37 +371,117 @@ export class ThermalPrinterRenderer {
       );
     }
 
-    device.open();
-
+    let opened = false;
+    let claimedInterface: number | undefined;
+    let detachedInterface: number | undefined;
+    let operationFailed = false;
     try {
-      const iface = device.interface(0);
+      await device.open();
+      opened = true;
 
-      // Detach kernel driver if active (e.g. macOS claiming the device)
-      if (iface.isKernelDriverActive()) {
-        iface.detachKernelDriver();
+      let configuration = device.configuration;
+      if (!configuration) {
+        const firstConfiguration = device.configurations[0];
+        if (!firstConfiguration) {
+          throw new Error("USB printer has no available configuration.");
+        }
+        await device.selectConfiguration(firstConfiguration.configurationValue);
+        configuration = device.configuration;
+      }
+      if (!configuration) {
+        throw new Error("USB printer configuration could not be selected.");
       }
 
-      iface.claim();
-
-      // Find the OUT endpoint (bulk transfer to printer)
-      const outEndpoint = iface.endpoints.find(
-        (ep): ep is InstanceType<typeof OutEndpoint> =>
-          ep instanceof OutEndpoint,
+      // Prefer printer-class interfaces and their current alternate setting.
+      // Vendor-specific printers remain supported via their bulk OUT endpoint.
+      const outputs = configuration.interfaces.flatMap((iface) => {
+        const alternates = [
+          iface.alternate,
+          ...iface.alternates.filter(
+            (alternate) => alternate.alternateSetting !== iface.alternate.alternateSetting,
+          ),
+        ];
+        return alternates.flatMap((alternate) =>
+          alternate.endpoints
+            .filter((endpoint) => endpoint.direction === "out" && endpoint.type === "bulk")
+            .map((endpoint) => ({ iface, alternate, endpoint })),
+        );
+      });
+      outputs.sort((a, b) =>
+        Number(b.alternate.interfaceClass === 7) - Number(a.alternate.interfaceClass === 7),
       );
+      const output = outputs[0];
+      if (!output) {
+        throw new Error("No bulk OUT endpoint found on USB printer interfaces.");
+      }
+      const interfaceNumber = output.iface.interfaceNumber;
 
-      if (!outEndpoint) {
-        throw new Error(
-          "No OUT endpoint found on USB interface 0. " +
-            `Endpoints: ${iface.endpoints.map((e) => `${e.address} (${e.direction})`).join(", ")}`,
+      try {
+        await device.claimInterface(interfaceNumber);
+      } catch (claimError) {
+        // USB 3 exposes kernel driver detach only on Linux. Retry a busy
+        // interface there, and restore its driver after printing or failure.
+        if (process.platform !== "linux") throw claimError;
+        try {
+          await device.detachKernelDriver(interfaceNumber);
+          detachedInterface = interfaceNumber;
+        } catch {
+          throw claimError;
+        }
+        await device.claimInterface(interfaceNumber);
+      }
+      claimedInterface = interfaceNumber;
+
+      if (output.alternate.alternateSetting !== output.iface.alternate.alternateSetting) {
+        await device.selectAlternateInterface(
+          interfaceNumber,
+          output.alternate.alternateSetting,
         );
       }
 
-      // Send the data
-      await outEndpoint.transferAsync(buffer);
-
-      await iface.releaseAsync();
+      // Copy exactly the receipt bytes, including sliced Buffer offsets.
+      const result = await device.transferOut(
+        output.endpoint.endpointNumber,
+        Uint8Array.from(buffer),
+      );
+      if (result.status !== "ok") {
+        throw new Error(`USB printer transfer failed: ${result.status}.`);
+      }
+      if (result.bytesWritten !== buffer.byteLength) {
+        throw new Error(
+          `USB printer transfer was incomplete: ${result.bytesWritten}/${buffer.byteLength} bytes written.`,
+        );
+      }
+    } catch (error) {
+      operationFailed = true;
+      throw error;
     } finally {
-      device.close();
+      const cleanupErrors: unknown[] = [];
+      if (claimedInterface !== undefined) {
+        try {
+          await device.releaseInterface(claimedInterface);
+        } catch (error) {
+          cleanupErrors.push(error);
+        }
+      }
+      if (detachedInterface !== undefined) {
+        try {
+          await device.attachKernelDriver(detachedInterface);
+        } catch (error) {
+          cleanupErrors.push(error);
+        }
+      }
+      if (opened) {
+        try {
+          await device.close();
+        } catch (error) {
+          cleanupErrors.push(error);
+        }
+      }
+      // A cleanup error must not hide the original print failure.
+      if (!operationFailed && cleanupErrors.length > 0) {
+        throw new AggregateError(cleanupErrors, "USB printer cleanup failed.");
+      }
     }
   }
 

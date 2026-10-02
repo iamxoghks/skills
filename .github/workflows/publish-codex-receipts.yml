@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "24"
+          check-latest: true
           registry-url: https://registry.npmjs.org
           cache: npm
           cache-dependency-path: packages/codex-receipts/package-lock.json
@@ -33,6 +34,12 @@ jobs:
         run: |
           version="$(node -p "require('./package.json').version")"
           test "$GITHUB_REF_NAME" = "codex-receipts-v$version"
+
+      - name: Update and verify npm publishing toolchain
+        run: |
+          npm install --global npm@latest
+          node --version
+          npm --version
 
       - name: Install dependencies
         run: npm ci
