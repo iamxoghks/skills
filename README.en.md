@@ -63,10 +63,10 @@ capability. FFmpeg is optional for video analysis, and Playwright is used for
 PDF rendering.
 
 `codex-receipts` never installs or updates its runtime package automatically.
-Install the pinned CLI separately:
+Node.js 22.12.0 or newer is required. Install the pinned CLI separately:
 
 ```bash
-npm install --global codex-receipts@1.2.11
+npm install --global codex-receipts@1.3.0
 ```
 
 The CLI and MCP server source lives in

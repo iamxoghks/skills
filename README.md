@@ -74,10 +74,10 @@ $skill-installer install https://github.com/iamxoghks/skills/tree/main/skills/ka
 ### Codex Receipts
 
 스킬은 패키지를 자동으로 내려받거나 업데이트하지 않습니다. 사용 전에 별도로
-고정 버전 CLI를 설치해야 합니다.
+고정 버전 CLI를 설치해야 합니다. Node.js 22.12.0 이상이 필요합니다.
 
 ```bash
-npm install --global codex-receipts@1.2.11
+npm install --global codex-receipts@1.3.0
 ```
 
 CLI와 MCP 서버 소스는

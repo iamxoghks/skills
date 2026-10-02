@@ -33,6 +33,30 @@ Physical printer output was not exercised. Native loading and mocked driver
 behavior do not establish real-device compatibility. Audit results reflect
 the advisory database at the time of the check.
 
+## Published release
+
+- Source commit: `3cadac0c61cc132b63eade9d23482ab61c23300f`.
+- All four source CI jobs passed in
+  [run 37050477890](https://github.com/iamxoghks/skills/actions/runs/37050477890).
+- Release tag: `codex-receipts-v1.3.0`.
+- The public npm version and `latest` tag are both
+  [1.3.0](https://www.npmjs.com/package/codex-receipts/v/1.3.0).
+- Registry tarball SHA-1 is `c78ba0aba3a72bf9b4d303f7d24eec179c48a20a`,
+  identical to the locally tested tarball; npm provenance is present.
+- Independent packed-consumer checks passed on Node 22.12 and 24, including
+  strict public declaration checking with `skipLibCheck: false`.
+- A fresh install from the public npm registry passed the real CLI, fixture
+  MCP, and 20 USB checks on Node 24; its full dependency audit was zero.
+
+GitHub created two publish runs for the same tag. Run 37050728775 uploaded
+successfully before its cancellation completed; its Publish step succeeded.
+Run 37050725617 then failed with E409 while npm was processing the same version.
+The public registry confirms successful publication. Do not re-publish this
+version in response to the failed duplicate. The release workflow now queues
+runs for each tag without canceling an active publisher.
+
+The catalog skill and both catalog READMEs now pin 1.3.0.
+
 ## Release and resume
 
 GitHub CI now tests the package on Node 22.12.0, 24, and 26. The trusted npm
